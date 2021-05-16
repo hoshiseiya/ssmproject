@@ -24,10 +24,10 @@ public class UserController {
     @ResponseBody
     public Map<String, Object> login(String loginAct, String loginPwd, HttpServletRequest request) {
         System.out.println("进入到后台了");
-        System.out.println(loginAct + "=====================" + loginPwd);
+        System.out.println(loginAct + "==" + loginPwd);
         loginPwd = MD5Util.getMD5(loginPwd);
         String ip = request.getRemoteAddr();
-        System.out.println("==================ip" + ip);
+        System.out.println("ip==" + ip);
         Map<String, Object> map = new HashMap<>();
         try {
             User user = userService.login(loginAct, loginPwd, ip);

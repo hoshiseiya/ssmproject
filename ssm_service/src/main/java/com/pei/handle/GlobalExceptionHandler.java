@@ -1,11 +1,23 @@
-package com.pei.exception;
+package com.pei.handle;
 
+import com.pei.exception.AccountException;
+import com.pei.exception.AgeException;
+import com.pei.exception.LoginException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = AccountException.class)
+    public void doAccountException(Exception e){
+        System.out.println("doAccountException = " + e);
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("tips",e.getMessage());
+        mv.setViewName("error");
+    }
 
     @ExceptionHandler(value = LoginException.class)
     public ModelAndView doLoginException(Exception e){
@@ -16,7 +28,6 @@ public class GlobalExceptionHandler {
         mv.setViewName("error");
         return mv;
     }
-
 
     @ExceptionHandler(value = AgeException.class)
     public ModelAndView doAgeException(Exception e){
@@ -33,7 +44,7 @@ public class GlobalExceptionHandler {
         System.out.println("doOtherException = " + e);
 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("tips","服务器崩溃了,请稍后重试");
+        mv.addObject("tips","服务器崩溃了,请稍后重置");
         mv.setViewName("error");
         return mv;
     }

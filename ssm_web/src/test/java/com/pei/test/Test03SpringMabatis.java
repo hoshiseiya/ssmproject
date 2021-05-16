@@ -28,12 +28,17 @@ public class Test03SpringMabatis {
         System.out.println(list);
     }
 
-    @Test
+ /*   @Test
     public void testLogin() throws LoginException {
         String loginAct = "zs";
         String loginPwd = "123";
         loginPwd = MD5Util.getMD5(loginPwd);
         userService.login(loginAct,loginPwd,"12321313");
+    }*/
+    @Test
+    public void testIp() {
+    String ips = "192.168.1.1,192.168.1.2,127.0.0.1";
+        System.out.println(!ips.contains("127.0.0.1"));
     }
 }
 
