@@ -1,12 +1,15 @@
 package com.pei.test;
 
+import com.pei.domain.User;
 import com.pei.service.UserService;
+import com.pei.utils.MD5Util;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.security.auth.login.LoginException;
 import java.util.List;
 
 /**
@@ -24,12 +27,13 @@ public class Test03SpringMabatis {
         List list = userService.getUserList();
         System.out.println(list);
     }
-   /* @Test
-    public void testSave() {
-        Account account = new Account();
-        account.setName(" 测 试 账 号 ");
-        account.setMoney(1234f);
-        accountService.saveAccount(account);
-    }*/
+
+    @Test
+    public void testLogin() throws LoginException {
+        String loginAct = "zs";
+        String loginPwd = "123";
+        loginPwd = MD5Util.getMD5(loginPwd);
+        userService.login(loginAct,loginPwd,"12321313");
+    }
 }
 

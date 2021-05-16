@@ -1,36 +1,52 @@
 package com.pei.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.pei.dao.UserMapper;
+import com.pei.dao.UserDao;
 import com.pei.domain.User;
-import com.pei.domain.UserExample;
 import com.pei.service.UserService;
+import com.pei.utils.DateTimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.LoginException;
+import java.util.HashMap;
 import java.util.List;
-@Service("userService") //此处名称可以定义也可以不定义
-public class UserServiceImpl implements UserService {
+import java.util.Map;
 
+@Service
+public class UserServiceImpl implements UserService {
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Override
-    public void save(User user) {
-        userMapper.insert(user);
+    public User login(String loginAct, String loginPwd,String ip)throws LoginException {
+        Map<String ,Object> map=new HashMap<>();
+        map.put("loginAct",loginAct);
+        map.put("loginPwd",loginPwd);
+        User user=userDao.login(map);
+
+        if(user==null){
+            throw new LoginException("账号密码错误");
+        }
+//        如果程序往下执行，说明账号密码正确，需要继续判断其他三项信息
+        String expireTime=user.getExpireTime();
+        String currentTime= DateTimeUtil.getSysTime();
+        if(expireTime.compareTo(currentTime)<0){
+            throw new LoginException("账号已失效");
+        }
+//        锁定状态判断
+        if("0".equals(user.getLockState())){
+            throw new LoginException("账号已锁定");
+        }
+//        判断ip地址是否符合 允许ip是否包含登录ip
+//        if(user.getAllowIps().contains(ip)){
+//            throw new LoginException("IP地址受限");
+//        }
+        return user;
     }
 
     @Override
     public List<User> getUserList() {
-        return userMapper.selectByExample(new UserExample());
-    }
-
-    @Override
-    public PageInfo page(Integer pageNumber) {
-        PageHelper.startPage(pageNumber , 4);
-        List<User> list = userMapper.selectByExample(new UserExample());
-        PageInfo<User> pageInfo = new PageInfo<>(list);
-        return pageInfo;
+        List<User> ulist=userDao.getUserList();
+        return ulist;
     }
 }

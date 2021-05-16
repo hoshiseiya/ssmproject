@@ -3,44 +3,44 @@ package com.pei.domain;
 public class User {
     private String id;
 
-    private String loginact;
+    private String loginAct;
 
     private String name;
 
-    private String loginpwd;
+    private String loginPwd;
 
     private String email;
 
-    private String expiretime;
+    private String expireTime;
 
-    private String lockstate;
+    private String lockState;
 
-    private String deptno;
+    private String deptNo;
 
-    private String allowips;
+    private String allowIps;
 
-    private String createtime;
+    private String createTime;
 
-    private String createby;
+    private String createBy;
 
-    private String edittime;
+    private String editTime;
 
-    private String editby;
+    private String editBy;
 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
-    public String getLoginact() {
-        return loginact;
+    public String getLoginAct() {
+        return loginAct;
     }
 
-    public void setLoginact(String loginact) {
-        this.loginact = loginact == null ? null : loginact.trim();
+    public void setLoginAct(String loginAct) {
+        this.loginAct = loginAct;
     }
 
     public String getName() {
@@ -48,15 +48,15 @@ public class User {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
-    public String getLoginpwd() {
-        return loginpwd;
+    public String getLoginPwd() {
+        return loginPwd;
     }
 
-    public void setLoginpwd(String loginpwd) {
-        this.loginpwd = loginpwd == null ? null : loginpwd.trim();
+    public void setLoginPwd(String loginPwd) {
+        this.loginPwd = loginPwd;
     }
 
     public String getEmail() {
@@ -64,70 +64,70 @@ public class User {
     }
 
     public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+        this.email = email;
     }
 
-    public String getExpiretime() {
-        return expiretime;
+    public String getExpireTime() {
+        return expireTime;
     }
 
-    public void setExpiretime(String expiretime) {
-        this.expiretime = expiretime == null ? null : expiretime.trim();
+    public void setExpireTime(String expireTime) {
+        this.expireTime = expireTime;
     }
 
-    public String getLockstate() {
-        return lockstate;
+    public String getLockState() {
+        return lockState;
     }
 
-    public void setLockstate(String lockstate) {
-        this.lockstate = lockstate == null ? null : lockstate.trim();
+    public void setLockState(String lockState) {
+        this.lockState = lockState;
     }
 
-    public String getDeptno() {
-        return deptno;
+    public String getDeptNo() {
+        return deptNo;
     }
 
-    public void setDeptno(String deptno) {
-        this.deptno = deptno == null ? null : deptno.trim();
+    public void setDeptNo(String deptNo) {
+        this.deptNo = deptNo;
     }
 
-    public String getAllowips() {
-        return allowips;
+    public String getAllowIps() {
+        return allowIps;
     }
 
-    public void setAllowips(String allowips) {
-        this.allowips = allowips == null ? null : allowips.trim();
+    public void setAllowIps(String allowIps) {
+        this.allowIps = allowIps;
     }
 
-    public String getCreatetime() {
-        return createtime;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(String createtime) {
-        this.createtime = createtime == null ? null : createtime.trim();
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getCreateby() {
-        return createby;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setCreateby(String createby) {
-        this.createby = createby == null ? null : createby.trim();
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
-    public String getEdittime() {
-        return edittime;
+    public String getEditTime() {
+        return editTime;
     }
 
-    public void setEdittime(String edittime) {
-        this.edittime = edittime == null ? null : edittime.trim();
+    public void setEditTime(String editTime) {
+        this.editTime = editTime;
     }
 
-    public String getEditby() {
-        return editby;
+    public String getEditBy() {
+        return editBy;
     }
 
-    public void setEditby(String editby) {
-        this.editby = editby == null ? null : editby.trim();
+    public void setEditBy(String editBy) {
+        this.editBy = editBy;
     }
 }

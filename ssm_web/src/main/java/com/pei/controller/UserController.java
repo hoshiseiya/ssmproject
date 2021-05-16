@@ -1,49 +1,46 @@
 package com.pei.controller;
 
-import com.github.pagehelper.PageInfo;
+
 import com.pei.domain.User;
 import com.pei.service.UserService;
+import com.pei.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.HashMap;
+
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
     @Autowired
-    private UserService userService ;
+    private UserService userService;
 
-    @RequestMapping("/saveUser")
-    public String saveAccount(User user)
-    {
-        userService.save(user);
-        return "redirect";
-    }
-    /**
-     * 查询所有账户
-     * @return
-     */
-    @RequestMapping("/findAllUser")
-    public ModelAndView findAllUser() {
-        List<User> userList = userService.getUserList();
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("userList", userList);
-        mv.setViewName("success");
-        return mv;
+    @RequestMapping("/login.do")
+    @ResponseBody
+    public Map<String, Object> login(String loginAct, String loginPwd, HttpServletRequest request) {
+        System.out.println("进入到后台了");
+        System.out.println(loginAct + "=====================" + loginPwd);
+        loginPwd = MD5Util.getMD5(loginPwd);
+        String ip = request.getRemoteAddr();
+        System.out.println("==================ip" + ip);
+        Map<String, Object> map = new HashMap<>();
+        try {
+            User user = userService.login(loginAct, loginPwd, ip);
+            request.getSession().setAttribute("user", user);
+            map.put("success", true);
+        } catch (Exception e) {
+            //            一旦执行catch块 表示抛出异常 登录失败
+            e.printStackTrace();
+            String msg = e.getMessage();
+            map.put("success", false);
+            map.put("msg", msg);
+        }
+        return map;
     }
 
-    @RequestMapping("page")
-    public String page(int pageNum, Model model, HttpServletRequest request){
-        PageInfo pageInfo = userService.page(pageNum);
-        //System.out.println("pageInfo = " + pageInfo);
-        model.addAttribute("url" , request.getContextPath()+"/user/page?r="+ Math.random());
-        model.addAttribute("page" , pageInfo);
-        return "pageUser";
-    }
 }

@@ -46,7 +46,7 @@ String basePath = request.getScheme() +
 				return false;
 			}
 			$.ajax({
-				url:"user/login",
+				url:"user/login.do",
 				data:{
 					"loginAct":loginAct,
 					"loginPwd":loginPwd
