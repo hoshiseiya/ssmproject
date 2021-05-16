@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<settings>
+    <setting name="logImpl" value="STDOUT_LOGGING"/>
+</settings>
+
+    <typeAliases>
+        <!-- 起别名 , 可以省略写完全限定名-->
+        <package name="com.pei.domain"/>
+    </typeAliases>
+
+    <plugins>
+        <!-- com.github.pagehelper为PageHelper类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 使用下面的方式配置参数，后面会有所有的参数介绍 -->
+            <!-- helperDialect分页插件会自动检测当前的数据库链接，自动选择合适的分页方式 -->
+            <property name="helperDialect" value="mysql"/>
+            <!--分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页 -->
+            <property name="reasonable" value="true"/>
+            <!--支持通过 Mapper 接口参数来传递分页参数，默认值false，分页插件会从查询方法的参数值中 -->
+            <property name="supportMethodsArguments" value="true"/>
+            <!-- 默认值为 false。设置为 true 时，允许在运行时根据多数据源自动识别对应方言的分页 （不支持自动选择sqlserver2012，只能使用sqlserver）-->
+            <property name="autoRuntimeDialect" value="true"/>
+        </plugin>
+    </plugins>
+
+</configuration>
