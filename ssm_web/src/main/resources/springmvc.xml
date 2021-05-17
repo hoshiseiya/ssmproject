@@ -17,7 +17,7 @@
     </context:component-scan>
     <!--    视图解析器 配置前缀和后缀-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/workbench"/>
+        <property name="prefix" value="/workbench/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--    加入注解驱动  1.响应ajax请求 返回json  2.解决静态资源访问问题-->

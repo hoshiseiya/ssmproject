@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("tips",e.getMessage());
-        mv.setViewName("error");
+        mv.setViewName("redirect:login.jsp");
     }
 
     @ExceptionHandler(value = LoginException.class)
@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("tips",e.getMessage());
-        mv.setViewName("error");
+        mv.setViewName("redirect:login.jsp");
         return mv;
     }
 
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("tips",e.getMessage());
-        mv.setViewName("error");
+        mv.setViewName("redirect:login.jsp");
         return mv;
     }
 
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
 
         ModelAndView mv = new ModelAndView();
         mv.addObject("tips","服务器崩溃了,请稍后重置");
-        mv.setViewName("error");
+        mv.setViewName("/error/error");
         return mv;
     }
 }
