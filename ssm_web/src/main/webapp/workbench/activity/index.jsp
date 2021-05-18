@@ -113,15 +113,14 @@
             })
 
             //	为全选的复选框绑定事件，触发全选操作
-
             $("#qx").click(function () {
                 $("input[name=xz]").prop("checked", this.checked);
             })
-            //一下这种做法是不行的  因为动态生成的元素是不能以普通绑定事件的元素进行操作的
+            //以下这种做法是不行的  因为动态生成的元素是不能以普通绑定事件的元素进行操作的
             /*$("input[name=xz]").click(function (){
                 alert("123");
             })
-            动态生成的元素 我们要以on放的形式来触发事件 $(需要绑定的元素有效的外层元素).on(绑定事件的方式，需要绑定的元素的jQuery对象，回调函数)*/
+            动态生成的元素 我们要以on的形式来触发事件 $(需要绑定的元素有效的外层元素).on(绑定事件的方式，需要绑定的元素的jQuery对象，回调函数)*/
             $("#emps_table tbody").on("click", $("input[name=xz]"), function () {
                 // alert("123");
                 $("#qx").prop("checked", $("input[name=xz]").length == $("input[name=xz]:checked").length);
@@ -148,17 +147,17 @@
                             }
                         }
                     }
-                    // alert(param);
+                     alert(param);
                     $.ajax({
                         url: "activity/delete.do",
                         data: param,
                         dataType: "json",
                         type: "post",
                         success: function (data) {
-                            //	返回成功或者失败就可以
+                            //	返回成功或者失败都可以
                             if (data) {
                                 //回到第一页，维持每页展现的记录数
-                                pageList(1, $("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+                                pageList(1);
 
                             } else {
                                 alert("删除市场活动失败")
@@ -232,8 +231,7 @@
                             //    刷新市场信息活动列表
                             // pageList(1,2);
                             //修改操作后，应该维持到当前页，维持每页展现的记录数
-                            pageList($("#activityPage").bs_pagination('getOption', 'currentPage')
-                                , $("#activityPage").bs_pagination('getOption', 'rowsPerPage'));
+                            pageList($("#page_info_area").bs_pagination('getOption', 'currentPage'));
 
                             //    关闭模态窗口
                             $("#editActivityModal").modal("hide");
@@ -261,6 +259,7 @@
                     "startDate": $.trim($("#search-startDate").val()),
                     "endDate": $.trim($("#search-endDate").val())
                 },
+                contentType:"application/json",
                 dataType: "json",
                 type: "get",
                 success: function (data) {
@@ -540,20 +539,22 @@
         <div class="btn-toolbar" role="toolbar"
              style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
             <div class="btn-group" style="position: relative; top: 18%;">
-                <%--					点击创建按钮，观察两个属性和属性值
-                                        data-toggle="modal"
-                                           表示触发该按键按钮，将要打开一个模态窗口
-                                           data-target="#createActivityModal"
-                                           表示将要打开哪个模态窗口，通过#id的方式找到窗口--%>
-                <button id="addBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>
-                    创建
-                </button>
-                <button id="editBtn" type="button" class="btn btn-default"><span
-                        class="glyphicon glyphicon-pencil"></span> 修改
-                </button>
-                <button id="deleteBtn" type="button" class="btn btn-danger"><span
-                        class="glyphicon glyphicon-minus"></span> 删除
-                </button>
+                <!--
+                           点击创建按钮，观察两个属性和属性值
+                           data-toggle="modal"：
+                               表示触发该按钮，将要打开一个模态窗口
+                           data-target="#createActivityModal"：
+                               表示要打开哪个模态窗口，通过#id的形式找到该窗口
+                           现在我们是以属性和属性值的方式写在了button元素中，用来打开模态窗口
+                           但是这样做是有问题的：
+                               问题在于没有办法对按钮的功能进行扩充
+
+                           所以未来的实际项目开发，对于触发模态窗口的操作，一定不要写死在元素当中，
+                           应该由我们自己写js代码来操作
+                       -->
+                    <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+                    <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+                    <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
             </div>
 
         </div>

@@ -23,9 +23,33 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public PageInfo pageList(Map<String, Object> map) {
-        PageHelper.startPage((Integer)map.get("pageNum"),4);//查第pageNum页，每页显示4条记录
+        PageHelper.startPage(Integer.parseInt((String) map.get("pageNum")), 4);//查第pageNum页，每页显示4条记录
+        PageHelper.orderBy("startDate desc");
         List<Activity> activityList = activityDao.getActivityListByCondition(map);
         PageInfo<Activity> pageInfo = new PageInfo<>(activityList);
         return pageInfo;
+    }
+
+    @Override
+    public Boolean save(Activity activity) {
+        boolean flag = true;
+        int count = activityDao.save(activity);
+        if (count != 1) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean delete(String[] ids) {
+        boolean flag = true;
+
+
+        //删除市场活动
+        int Count3 = activityDao.delete(ids);
+        if (Count3 != ids.length) {
+            flag = false;
+        }
+        return flag;
     }
 }

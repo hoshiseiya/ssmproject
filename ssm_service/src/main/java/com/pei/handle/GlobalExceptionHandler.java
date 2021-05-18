@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
         return mv;
     }
 
-    @ExceptionHandler
+   /* @ExceptionHandler
     public ModelAndView doOtherException(Exception e){
         System.out.println("doOtherException = " + e);
 
@@ -47,5 +47,5 @@ public class GlobalExceptionHandler {
         mv.addObject("tips","服务器崩溃了,请稍后重置");
         mv.setViewName("/error/error");
         return mv;
-    }
+    }*/
 }

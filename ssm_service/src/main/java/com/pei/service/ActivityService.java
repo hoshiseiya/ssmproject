@@ -10,4 +10,9 @@ public interface ActivityService {
     List<Activity> findAllActivity();
 
     PageInfo pageList(Map<String, Object> map);
+
+    Boolean save(Activity activity);
+
+    Boolean delete(String[] ids);
+
 }
