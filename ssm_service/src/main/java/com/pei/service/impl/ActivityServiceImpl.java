@@ -23,8 +23,8 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public PageInfo pageList(Map<String, Object> map) {
-        PageHelper.startPage((Integer)map.get("pageNum"),4);//查第pageNum页，显示4条记录
-        List<Activity> activityList = activityDao.getActivityListByCondition(map);//现在应该是五条记录
+        PageHelper.startPage((Integer)map.get("pageNum"),4);//查第pageNum页，每页显示4条记录
+        List<Activity> activityList = activityDao.getActivityListByCondition(map);
         PageInfo<Activity> pageInfo = new PageInfo<>(activityList);
         return pageInfo;
     }

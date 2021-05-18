@@ -13,11 +13,13 @@
     <base href="<%=basePath%>">
     <meta charset="UTF-8">
     <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-    <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet"/>
+    <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css"
+          rel="stylesheet"/>
     <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
     <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript"
+            src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
     <link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
     <script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
     <script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
@@ -120,7 +122,7 @@
                 alert("123");
             })
             动态生成的元素 我们要以on放的形式来触发事件 $(需要绑定的元素有效的外层元素).on(绑定事件的方式，需要绑定的元素的jQuery对象，回调函数)*/
-            $("#activityBody").on("click", $("input[name=xz]"), function () {
+            $("#emps_table tbody").on("click", $("input[name=xz]"), function () {
                 // alert("123");
                 $("#qx").prop("checked", $("input[name=xz]").length == $("input[name=xz]:checked").length);
             })
@@ -263,8 +265,7 @@
                 type: "get",
                 success: function (data) {
                     var html = "";
-                    $.each(data.list, function (i, n) {
-                        alert(n.id);
+                    $.each(data.extend.pageInfo.list, function (i, n) {
                         html += '<tr class="active">';
                         html += '<td><input name="xz" type="checkbox" value="' + n.id + '"/></td>';
                         html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'activity/detail.do?id=' + n.id + '\';">' + n.name + '</a></td>';
@@ -273,12 +274,81 @@
                         html += '<td>' + n.endDate + '</td>';
                         html += '</tr>';
                     })
-                    $("#page_info_area").html(html);
+                    //1、解析并显示数据
+                    $("#emps_table tbody").html(html);
+                    //2、解析并显示分页信息
+                    build_page_info(data);
+                    //3、解析显示分页条数据
+                    build_page_nav(data);
                 }
             })
             $("#qx").prop("checked", false);
         }
+        //解析显示分页信息
+        function build_page_info(data){
+            $("#page_info_area").empty();
+            $("#page_info_area").append("当前"+data.extend.pageInfo.pageNum+"页,总"+
+                data.extend.pageInfo.pages+"页,总"+
+                data.extend.pageInfo.total+"条记录");
+            totalRecord = data.extend.pageInfo.total;
+            currentPage = data.extend.pageInfo.pageNum;
+        }
+        //解析显示分页条，点击分页要能去下一页....
+        function build_page_nav(data){
+            $("#page_nav_area").empty();
+            var ul = $("<ul></ul>").addClass("pagination");
 
+            //构建元素
+            var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","javascript:void(0)"));
+            var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
+            if(data.extend.pageInfo.hasPreviousPage == false){
+                firstPageLi.addClass("disabled");
+                prePageLi.addClass("disabled");
+            }else{
+                //为元素添加点击翻页的事件
+                firstPageLi.click(function(){
+                    pageList(1);
+                });
+                prePageLi.click(function(){
+                    pageList(data.extend.pageInfo.pageNum -1);
+                });
+            }
+
+            var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
+            var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","javascript:void(0)"));
+            if(data.extend.pageInfo.hasNextPage == false){
+                nextPageLi.addClass("disabled");
+                lastPageLi.addClass("disabled");
+            }else{
+                nextPageLi.click(function(){
+                    pageList(data.extend.pageInfo.pageNum +1);
+                });
+                lastPageLi.click(function(){
+                    pageList(data.extend.pageInfo.pages);
+                });
+            }
+
+            //添加首页和前一页 的提示
+            ul.append(firstPageLi).append(prePageLi);
+            //1,2，3遍历给ul中添加页码提示
+            $.each(data.extend.pageInfo.navigatepageNums,function(index,item){
+
+                var numLi = $("<li></li>").append($("<a></a>").append(item));
+                if(data.extend.pageInfo.pageNum == item){
+                    numLi.addClass("active");
+                }
+                numLi.click(function(){
+                    pageList(item);
+                });
+                ul.append(numLi);
+            });
+            //添加下一页和末页 的提示
+            ul.append(nextPageLi).append(lastPageLi);
+
+            //把ul加入到nav
+            var navEle = $("<nav></nav>").append(ul);
+            navEle.appendTo("#page_nav_area");
+        }
     </script>
 </head>
 <body>
@@ -487,25 +557,39 @@
             </div>
 
         </div>
-        <div style="position: relative;top: 10px;">
-            <table class="table table-hover">
-                <thead>
-                <tr style="color: #B3B3B3;">
-                    <td><input type="checkbox" id="qx"/></td>
-                    <td>名称</td>
-                    <td>所有者</td>
-                    <td>开始日期</td>
-                    <td>结束日期</td>
-                </tr>
-                </thead>
 
-                <%--展示数据--%>
-                <tbody id="page_info_area"></tbody>
+        <!-- 搭建显示页面 -->
+        <div class="container">
+            </div>
+            <!-- 显示表格数据 -->
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-hover" id="emps_table">
+                        <thead>
+                        <tr style="color: #B3B3B3;">
+                            <td><input type="checkbox" id="qx"/></td>
+                            <td>名称</td>
+                            <td>所有者</td>
+                            <td>开始日期</td>
+                            <td>结束日期</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <%--分页查询--%>
-        <jsp:include page="/workbench/pages/page.jsp"></jsp:include>
+            <!-- 显示分页信息 -->
+            <div class="row">
+                <!--分页文字信息  -->
+                <div class="col-md-6" id="page_info_area"></div>
+                <!-- 分页条信息 -->
+                <div class="col-md-6" id="page_nav_area">
 
-    </div>
+                </div>
+            </div>
+        </div>
 
 </div>
 </body>
