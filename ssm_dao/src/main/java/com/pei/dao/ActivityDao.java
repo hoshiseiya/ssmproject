@@ -1,6 +1,7 @@
 package com.pei.dao;
 
 import com.pei.domain.Activity;
+import com.pei.domain.ActivityRemark;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,4 +20,10 @@ public interface ActivityDao {
     Activity getActivityById(String id);
 
     Integer update(Activity activity);
+
+    Activity detail(String id);
+
+    List<ActivityRemark> getRemarkListByAid(String activityId);
+
+    Integer deleteRemark(String id);
 }

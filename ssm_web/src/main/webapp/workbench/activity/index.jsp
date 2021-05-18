@@ -147,7 +147,7 @@
                             }
                         }
                     }
-                     alert(param);
+                    alert(param);
                     $.ajax({
                         url: "activity/delete.do",
                         data: param,
@@ -259,7 +259,7 @@
                     "startDate": $.trim($("#search-startDate").val()),
                     "endDate": $.trim($("#search-endDate").val())
                 },
-                contentType:"application/json",
+                contentType: "application/json",
                 dataType: "json",
                 type: "get",
                 success: function (data) {
@@ -283,46 +283,48 @@
             })
             $("#qx").prop("checked", false);
         }
+
         //解析显示分页信息
-        function build_page_info(data){
+        function build_page_info(data) {
             $("#page_info_area").empty();
-            $("#page_info_area").append("当前"+data.extend.pageInfo.pageNum+"页,总"+
-                data.extend.pageInfo.pages+"页,总"+
-                data.extend.pageInfo.total+"条记录");
+            $("#page_info_area").append("当前" + data.extend.pageInfo.pageNum + "页,总" +
+                data.extend.pageInfo.pages + "页,总" +
+                data.extend.pageInfo.total + "条记录");
             totalRecord = data.extend.pageInfo.total;
             currentPage = data.extend.pageInfo.pageNum;
         }
+
         //解析显示分页条，点击分页要能去下一页....
-        function build_page_nav(data){
+        function build_page_nav(data) {
             $("#page_nav_area").empty();
             var ul = $("<ul></ul>").addClass("pagination");
 
             //构建元素
-            var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href","javascript:void(0)"));
+            var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "javascript:void(0)"));
             var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
-            if(data.extend.pageInfo.hasPreviousPage == false){
+            if (data.extend.pageInfo.hasPreviousPage == false) {
                 firstPageLi.addClass("disabled");
                 prePageLi.addClass("disabled");
-            }else{
+            } else {
                 //为元素添加点击翻页的事件
-                firstPageLi.click(function(){
+                firstPageLi.click(function () {
                     pageList(1);
                 });
-                prePageLi.click(function(){
-                    pageList(data.extend.pageInfo.pageNum -1);
+                prePageLi.click(function () {
+                    pageList(data.extend.pageInfo.pageNum - 1);
                 });
             }
 
             var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
-            var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href","javascript:void(0)"));
-            if(data.extend.pageInfo.hasNextPage == false){
+            var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "javascript:void(0)"));
+            if (data.extend.pageInfo.hasNextPage == false) {
                 nextPageLi.addClass("disabled");
                 lastPageLi.addClass("disabled");
-            }else{
-                nextPageLi.click(function(){
-                    pageList(data.extend.pageInfo.pageNum +1);
+            } else {
+                nextPageLi.click(function () {
+                    pageList(data.extend.pageInfo.pageNum + 1);
                 });
-                lastPageLi.click(function(){
+                lastPageLi.click(function () {
                     pageList(data.extend.pageInfo.pages);
                 });
             }
@@ -330,13 +332,13 @@
             //添加首页和前一页 的提示
             ul.append(firstPageLi).append(prePageLi);
             //1,2，3遍历给ul中添加页码提示
-            $.each(data.extend.pageInfo.navigatepageNums,function(index,item){
+            $.each(data.extend.pageInfo.navigatepageNums, function (index, item) {
 
                 var numLi = $("<li></li>").append($("<a></a>").append(item));
-                if(data.extend.pageInfo.pageNum == item){
+                if (data.extend.pageInfo.pageNum == item) {
                     numLi.addClass("active");
                 }
-                numLi.click(function(){
+                numLi.click(function () {
                     pageList(item);
                 });
                 ul.append(numLi);
@@ -552,45 +554,51 @@
                            所以未来的实际项目开发，对于触发模态窗口的操作，一定不要写死在元素当中，
                            应该由我们自己写js代码来操作
                        -->
-                    <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-                    <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-                    <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+                <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span>
+                    创建
+                </button>
+                <button type="button" class="btn btn-default" id="editBtn"><span
+                        class="glyphicon glyphicon-pencil"></span> 修改
+                </button>
+                <button type="button" class="btn btn-danger" id="deleteBtn"><span
+                        class="glyphicon glyphicon-minus"></span> 删除
+                </button>
             </div>
 
         </div>
 
         <!-- 搭建显示页面 -->
         <div class="container">
-            </div>
-            <!-- 显示表格数据 -->
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-hover" id="emps_table">
-                        <thead>
-                        <tr style="color: #B3B3B3;">
-                            <td><input type="checkbox" id="qx"/></td>
-                            <td>名称</td>
-                            <td>所有者</td>
-                            <td>开始日期</td>
-                            <td>结束日期</td>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 显示分页信息 -->
-            <div class="row">
-                <!--分页文字信息  -->
-                <div class="col-md-6" id="page_info_area"></div>
-                <!-- 分页条信息 -->
-                <div class="col-md-6" id="page_nav_area">
-
-                </div>
+        </div>
+        <!-- 显示表格数据 -->
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover" id="emps_table">
+                    <thead>
+                    <tr style="color: #B3B3B3;">
+                        <td><input type="checkbox" id="qx"/></td>
+                        <td>名称</td>
+                        <td>所有者</td>
+                        <td>开始日期</td>
+                        <td>结束日期</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
+
+        <!-- 显示分页信息 -->
+        <div class="row">
+            <!--分页文字信息  -->
+            <div class="col-md-6" id="page_info_area"></div>
+            <!-- 分页条信息 -->
+            <div class="col-md-6" id="page_nav_area">
+
+            </div>
+        </div>
+    </div>
 
 </div>
 </body>

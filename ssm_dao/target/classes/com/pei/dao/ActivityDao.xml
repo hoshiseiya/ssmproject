@@ -19,6 +19,10 @@
         </foreach>
     </delete>
 
+    <delete id="deleteRemark">
+            delete from activity_remark where id=#{id}
+    </delete>
+
     <select id="findAll" resultType="com.pei.domain.Activity">
         select a.id,a.name,u.name as owner,a.startDate,a.endDate from activity a join user u on a.owner=u.id
         <where>
@@ -74,5 +78,13 @@
 
     <select id="getActivityById" resultType="com.pei.domain.Activity">
         select * from activity where id = #{id}
+    </select>
+    <select id="detail" resultType="com.pei.domain.Activity">
+        select
+            a.id,u.name as owner,a.name,a.startDate,a.endDate,a.cost,a.description,a.createTime,a.createBy,a.editTime,a.editBy
+        from activity a join user u on a.owner=u.id where a.id =#{id};
+    </select>
+    <select id="getRemarkListByAid" resultType="com.pei.domain.ActivityRemark">
+            select * from activity_remark where activityId =#{id}
     </select>
 </mapper>

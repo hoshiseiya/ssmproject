@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.pei.dao.ActivityDao;
 import com.pei.dao.UserDao;
 import com.pei.domain.Activity;
+import com.pei.domain.ActivityRemark;
 import com.pei.domain.User;
 import com.pei.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,29 @@ public class ActivityServiceImpl implements ActivityService {
             flag = false;
         }
         return flag;
+
+    }
+
+    @Override
+    public Activity detail(String id) {
+        Activity a=activityDao.detail(id);
+        return a;
+    }
+
+    @Override
+    public List<ActivityRemark> getRemarkListByAid(String activityId) {
+        return activityDao.getRemarkListByAid(activityId);
+    }
+
+    @Override
+    public Boolean deleteRemark(String id) {
+        boolean flag = true;
+        int count = activityDao.deleteRemark(id);
+        if (count != 1) {
+            flag = false;
+        }
+        return flag;
+
 
     }
 }
