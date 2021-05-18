@@ -3,11 +3,14 @@ package com.pei.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pei.dao.ActivityDao;
+import com.pei.dao.UserDao;
 import com.pei.domain.Activity;
+import com.pei.domain.User;
 import com.pei.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +18,8 @@ import java.util.Map;
 public class ActivityServiceImpl implements ActivityService {
     @Autowired
     private ActivityDao activityDao;
+    @Autowired
+    private UserDao userDao;
 
     @Override
     public List<Activity> findAllActivity() {
@@ -51,5 +56,26 @@ public class ActivityServiceImpl implements ActivityService {
             flag = false;
         }
         return flag;
+    }
+
+    @Override
+    public Map<String, Object> getUserListAndActivity(String id) {
+        List<User> userList = userDao.getUserList();
+        Activity a = activityDao.getActivityById(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userList",userList);
+        map.put("a",a);
+        return map;
+    }
+
+    @Override
+    public Boolean update(Activity activity) {
+        boolean flag = true;
+        int count = activityDao.update(activity);
+        if (count != 1) {
+            flag = false;
+        }
+        return flag;
+
     }
 }

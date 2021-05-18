@@ -6,6 +6,10 @@
      insert into activity (id,owner,name,startDate,endDate, cost,description,createTime,createBy,editTime,editBy)
     values(#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy},#{editTime},#{editBy})
     </insert>
+    <update id="update">
+         update activity set owner=#{owner},name=#{name},startDate =#{startDate},endDate=#{endDate},cost=#{cost},
+         description=#{description},editTime=#{editTime},editBy=#{editBy} where id = #{id}
+    </update>
 
     <delete id="delete">
         delete from activity
@@ -66,5 +70,9 @@
                 and a.endDate &lt; #{endDate}
             </if>
         </where>
+    </select>
+
+    <select id="getActivityById" resultType="com.pei.domain.Activity">
+        select * from activity where id = #{id}
     </select>
 </mapper>

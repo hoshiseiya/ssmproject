@@ -184,10 +184,10 @@
                         dataType: "json",
                         type: "get",
                         success: function (data) {
-                            //	要市场活动对象activity 和 用户列表ulist
+                            //	要市场活动对象和用户列表
                             //	处理下拉框中的用户
                             var html = "";
-                            $.each(data.uList, function (i, n) {
+                            $.each(data.userList, function (i, n) {
                                 html += "<option value='" + n.id + "'>" + n.name + "</option>"
                             })
                             $("#edit-owner").html(html);
@@ -229,9 +229,9 @@
                         if (data) {
                             //    修改成功后
                             //    刷新市场信息活动列表
-                            // pageList(1,2);
-                            //修改操作后，应该维持到当前页，维持每页展现的记录数
-                            pageList($("#page_info_area").bs_pagination('getOption', 'currentPage'));
+                            // pageList(1);
+                            //修改操作后，应该回到当前页，维持每页展现的记录数
+                            pageList(currentPage);
 
                             //    关闭模态窗口
                             $("#editActivityModal").modal("hide");

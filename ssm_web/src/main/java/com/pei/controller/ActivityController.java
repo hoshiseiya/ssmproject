@@ -10,7 +10,6 @@ import com.pei.utils.DateTimeUtil;
 import com.pei.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,6 +56,22 @@ public class ActivityController {
     @ResponseBody
     public Boolean delete(@RequestParam("id") String[] ids) {
         Boolean flag = activityService.delete(ids);
+        return flag;
+    }
+
+    @RequestMapping("/getUserListAndActivity.do")
+    @ResponseBody
+    public Map<String,Object> getUserListAndActivity(String id) {
+        Map<String,Object> map = activityService.getUserListAndActivity(id);
+        return map;
+    }
+
+    @RequestMapping("/update.do")
+    @ResponseBody
+    public Boolean update(Activity activity,HttpServletRequest request) {
+        activity.setEditBy(((User)request.getSession().getAttribute("user")).getName());
+        activity.setEditTime(DateTimeUtil.getSysTime());
+        Boolean flag = activityService.update(activity);
         return flag;
     }
 }
