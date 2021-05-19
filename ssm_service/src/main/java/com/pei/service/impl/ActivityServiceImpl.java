@@ -64,8 +64,8 @@ public class ActivityServiceImpl implements ActivityService {
         List<User> userList = userDao.getUserList();
         Activity a = activityDao.getActivityById(id);
         Map<String, Object> map = new HashMap<>();
-        map.put("userList",userList);
-        map.put("a",a);
+        map.put("userList", userList);
+        map.put("a", a);
         return map;
     }
 
@@ -82,7 +82,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity detail(String id) {
-        Activity a=activityDao.detail(id);
+        Activity a = activityDao.detail(id);
         return a;
     }
 
@@ -100,6 +100,17 @@ public class ActivityServiceImpl implements ActivityService {
         }
         return flag;
 
+
+    }
+
+    @Override
+    public Boolean saveRemark(ActivityRemark ar) {
+        Boolean flag = true;
+        int Count = activityDao.saveRemark(ar);
+        if (Count != 1) {
+            flag = false;
+        }
+        return flag;
 
     }
 }

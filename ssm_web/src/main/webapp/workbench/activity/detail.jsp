@@ -40,48 +40,103 @@
                 cancelAndSaveBtnDefault = true;
             });
 
-            $(".remarkDiv").mouseover(function () {
+            $(".remarkDiv").mouseover(function(){
                 $(this).children("div").children("div").show();
             });
 
-            $(".remarkDiv").mouseout(function () {
+            $(".remarkDiv").mouseout(function(){
                 $(this).children("div").children("div").hide();
             });
+
+            $(".myHref").mouseover(function(){
+                $(this).children("span").css("color","red");
+            });
+
+            $(".myHref").mouseout(function(){
+                $(this).children("span").css("color","#E6E6E6");
+            });
+
 
             showRemarkList();
 
-            $("#remarkBody").on("mouseover",".remarkDiv",function(){
+            $("#remarkBody").on("mouseover", ".remarkDiv", function () {
                 $(this).children("div").children("div").show();
             })
 
-            $("#remarkBody").on("mouseout",".remarkDiv",function(){
+            $("#remarkBody").on("mouseout", ".remarkDiv", function () {
                 $(this).children("div").children("div").hide();
             })
+
+            //    为保存按钮绑定事件，执行备注添加的操作
+            $("#saveRemarkBtn").click(function(){
+                    if ($("#remark").val() == "") {
+                        alert("请输入备份再保存");
+                        return false;
+                    }
+                $.ajax({
+                    url: "activity/saveRemark.do",
+                    data: {
+                        "noteContent": $.trim($("#remark").val()),
+                        "activityId": "${a.id}"
+                    },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        //    返回成功或者失败
+                        if (data.success) {
+                            //    添加成功
+                            //    将文本域中的信息清空
+                            $("#remark").val("");
+                            //    在文本域上方新增div
+                            var html = "";
+
+                            html += '<div id="' + data.ar.id + '" class="remarkDiv" style="height: 60px;">';
+                            html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+                            html += '<div style="position: relative; top: -40px; left: 40px;" >';
+                            html += '<h5>' + data.ar.noteContent + '</h5>';
+                            html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> ' + (data.ar.createTime) + ' 由' + (data.ar.createBy) + '</small>';
+                            html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+                            html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + data.ar.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                            html += '&nbsp;&nbsp;&nbsp;&nbsp;';
+                            html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\'' + data.ar.id + '\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+
+                            $("#remarkDiv").before(html);
+                        } else {
+                            alert("添加备注失败");
+                        }
+
+                    }
+                })
+            })
+
         });
 
-        function showRemarkList(){
+        function showRemarkList() {
             $.ajax({
-                url:"activity/getRemarkListById.do",
-                data:{
-                    "activityId":"${a.id}"
+                url: "activity/getRemarkListById.do",
+                data: {
+                    "activityId": "${a.id}"
                 },
-                dataType:"json",
-                type:"get",
-                success:function (data){
+                dataType: "json",
+                type: "get",
+                success: function (data) {
                     /*
                     * data是一个备注的数组
                     * */
-                    var html="";
-                    $.each(data,function (i,n){
-                        html += '<div id="'+n.id+'" class="remarkDiv" style="height: 60px;">';
+                    var html = "";
+                    $.each(data, function (i, n) {
+                        html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
                         html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                         html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                        html += '<h5 id="e'+n.id+'">'+n.noteContent+'</h5>';
-                        html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="s'+n.id+'"style="color: gray;"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small>';
+                        html += '<h5 id="e' + n.id + '">' + n.noteContent + '</h5>';
+                        html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="s' + n.id + '"style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
                         html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
-                        html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\''+n.id+'\')"><span id="span1" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                        html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + n.id + '\')"><span id="span1" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '&nbsp;&nbsp;&nbsp;&nbsp;';
-                        html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\''+n.id+'\')"><span id="span1" class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+                        html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\'' + n.id + '\')"><span id="span1" class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '</div>';
                         html += '</div>';
                         html += '</div>';
@@ -92,18 +147,18 @@
             })
         }
 
-        function deleteRemark(id){
-            if(confirm("确定要删除吗?")){
+        function deleteRemark(id) {
+            if (confirm("确定要删除吗?")) {
                 $.ajax({
-                    url:"activity/deleteRemark.do",
-                    data:{"id":id},
+                    url: "activity/deleteRemark.do",
+                    data: {"id": id},
                     dataType: "json",
-                    type:"post",
-                    success:function (flag) {
-                        if(flag == true){
+                    type: "post",
+                    success: function (flag) {
+                        if (flag == true) {
                             // showRemarkList();
-                            $("#"+id).remove();
-                        }else {
+                            $("#" + id).remove();
+                        } else {
                             alert("删除失败");
                         }
                     }
@@ -111,47 +166,7 @@
             }
         }
 
-        //    为保存按钮绑定事件，执行备注添加的操作
-        $("#saveRemarkBtn").click(function (){
 
-            $.ajax({
-                url:"activity/saveRemark.do",
-                data:{
-                    "noteContent":$.trim($("#remark").val()),
-                    "activityId":"${a.id}"
-                },
-                dataType:"json",
-                type:"post",
-                success:function (data){
-                    //    返回成功或者失败
-                    if(data.success){
-                        //    添加成功
-                        //    将文本域中的信息清空
-                        $("#remark").val("");
-                        //    在文本域上方新增div
-                        var html="";
-
-                        html += '<div id="'+data.ar.id+'" class="remarkDiv" style="height: 60px;">';
-                        html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
-                        html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                        html += '<h5>'+data.ar.noteContent+'</h5>';
-                        html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small style="color: gray;"> '+(data.ar.createTime)+' 由'+(data.ar.createBy)+'</small>';
-                        html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
-                        html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\''+data.ar.id+'\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
-                        html += '&nbsp;&nbsp;&nbsp;&nbsp;';
-                        html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\''+data.ar.id+'\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
-                        html += '</div>';
-                        html += '</div>';
-                        html += '</div>';
-
-                        $("#remarkDiv").before(html);
-                    }else{
-                        alert("添加备注失败");
-                    }
-
-                }
-            })
-        })
 
     </script>
 

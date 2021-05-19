@@ -6,6 +6,11 @@
      insert into activity (id,owner,name,startDate,endDate, cost,description,createTime,createBy,editTime,editBy)
     values(#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy},#{editTime},#{editBy})
     </insert>
+
+    <insert id="saveRemark">
+        insert into activity_remark (id,noteContent,createTime,createBy,editFlag,activityId) values (#{id},#{noteContent}, #{createTime},#{createBy},#{editFlag},#{activityId})
+    </insert>
+
     <update id="update">
          update activity set owner=#{owner},name=#{name},startDate =#{startDate},endDate=#{endDate},cost=#{cost},
          description=#{description},editTime=#{editTime},editBy=#{editBy} where id = #{id}

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -100,5 +101,19 @@ public class ActivityController {
         return flag;
     }
 
+    @RequestMapping("/saveRemark.do")
+    @ResponseBody
+    public Map<String, Object> saveRemark(ActivityRemark ar, HttpServletRequest request) {
+        System.out.println("ar = " + ar);
+        ar.setId(UUIDUtil.getUUID());
+        ar.setCreateBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        ar.setCreateTime(DateTimeUtil.getSysTime());
+        ar.setEditFlag("0");
+        Boolean flag = activityService.saveRemark(ar);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        return map;
+    }
 
 }
