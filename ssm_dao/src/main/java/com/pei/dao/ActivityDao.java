@@ -28,4 +28,6 @@ public interface ActivityDao {
     Integer deleteRemark(String id);
 
     Integer saveRemark(ActivityRemark ar);
+
+    Integer updateRemark(ActivityRemark ar);
 }

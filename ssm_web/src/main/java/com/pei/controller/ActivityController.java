@@ -116,4 +116,16 @@ public class ActivityController {
         return map;
     }
 
+    @RequestMapping("/updateRemark.do")
+    @ResponseBody
+    public Map<String, Object> updateRemark(ActivityRemark ar, HttpServletRequest request) {
+        ar.setEditBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        ar.setEditTime(DateTimeUtil.getSysTime());
+        ar.setEditFlag("1");
+        Boolean flag = activityService.updateRemark(ar);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", flag);
+        map.put("ar", ar);
+        return map;
+    }
 }

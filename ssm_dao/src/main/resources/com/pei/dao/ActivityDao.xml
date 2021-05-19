@@ -16,6 +16,11 @@
          description=#{description},editTime=#{editTime},editBy=#{editBy} where id = #{id}
     </update>
 
+    <update id="updateRemark">
+         update activity_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag} where id=#{id}
+
+    </update>
+
     <delete id="delete">
         delete from activity
         where id in

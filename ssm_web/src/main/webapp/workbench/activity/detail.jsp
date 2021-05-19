@@ -40,20 +40,20 @@
                 cancelAndSaveBtnDefault = true;
             });
 
-            $(".remarkDiv").mouseover(function(){
+            $(".remarkDiv").mouseover(function () {
                 $(this).children("div").children("div").show();
             });
 
-            $(".remarkDiv").mouseout(function(){
+            $(".remarkDiv").mouseout(function () {
                 $(this).children("div").children("div").hide();
             });
 
-            $(".myHref").mouseover(function(){
-                $(this).children("span").css("color","red");
+            $(".myHref").mouseover(function () {
+                $(this).children("span").css("color", "red");
             });
 
-            $(".myHref").mouseout(function(){
-                $(this).children("span").css("color","#E6E6E6");
+            $(".myHref").mouseout(function () {
+                $(this).children("span").css("color", "#E6E6E6");
             });
 
 
@@ -68,11 +68,11 @@
             })
 
             //    为保存按钮绑定事件，执行备注添加的操作
-            $("#saveRemarkBtn").click(function(){
-                    if ($("#remark").val() == "") {
-                        alert("请输入备份再保存");
-                        return false;
-                    }
+            $("#saveRemarkBtn").click(function () {
+                if ($("#remark").val() == "") {
+                    alert("请输入备份再保存");
+                    return false;
+                }
                 $.ajax({
                     url: "activity/saveRemark.do",
                     data: {
@@ -112,6 +112,35 @@
                 })
             })
 
+            //为更新按钮来绑定事件
+            $("#updateRemarkBtn").click(function () {
+               if(confirm("确认修改吗?")){
+                   var id = $("#remarkId").val();
+                   $.ajax({
+                       url: "activity/updateRemark.do",
+                       data: {
+                           "id": id,
+                           "noteContent": $.trim($("#noteContent").val())
+                       },
+                       dataType: "json",
+                       type: "post",
+                       success: function (data) {
+
+                           /*需要成功或者失败  还需要一个ar对象来更新信息*/
+                           if (data.success) {
+                               //    修改备注成功
+                               //    更新div中相应的信息，需要更新的内容有 noteContent editTime editBy
+                               $("#e" + id).html(data.ar.noteContent);
+                               $("#s" + id).html(data.ar.editTime + " 由" + data.ar.editBy);
+                               //    更新内容之后 关闭模态窗口
+                               $("#editRemarkModal").modal("hide");
+                           } else {
+                               alert("修改备注失败");
+                           }
+                       }
+                   })
+               }
+            })
         });
 
         function showRemarkList() {
@@ -166,14 +195,24 @@
             }
         }
 
-
+        function editRemark(id) {
+            // alert(id);
+            //将模态窗口中，隐藏域中的id赋值
+            $("#remarkId").val(id);
+            //找到指定的存放备注信息的h5的标签
+            var noteContent = $("#e" + id).html();
+            //将h5中展现出来的信息，赋予到修改操作模态窗口的文本域中
+            $("#noteContent").val(noteContent);
+            //将模态窗口打开
+            $("#editRemarkModal").modal("show");
+        }
 
     </script>
 
 </head>
 <body>
 
-<!-- 修改市场活动备注的模态窗口 -->
+<!-- 修改备注的模态窗口 -->
 <div class="modal fade" id="editRemarkModal" role="dialog">
     <%-- 备注的id --%>
     <input type="hidden" id="remarkId">
@@ -230,32 +269,32 @@
                         <label for="edit-marketActivityName" class="col-sm-2 control-label">名称<span
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-marketActivityName" value="发传单">
+                            <input type="text" class="form-control" id="edit-marketActivityName" value="${a.name}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-startTime" class="col-sm-2 control-label">开始日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-startTime" value="2020-10-10">
+                            <input type="text" class="form-control" id="edit-startTime" value="${a.startDate}">
                         </div>
                         <label for="edit-endTime" class="col-sm-2 control-label">结束日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-endTime" value="2020-10-20">
+                            <input type="text" class="form-control" id="edit-endTime" value="${a.endDate}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-cost" class="col-sm-2 control-label">成本</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-cost" value="5,000">
+                            <input type="text" class="form-control" id="edit-cost" value="${a.cost}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-describe" class="col-sm-2 control-label">描述</label>
                         <div class="col-sm-10" style="width: 81%;">
-                            <textarea class="form-control" rows="3" id="edit-describe">市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等</textarea>
+                            <textarea class="form-control" rows="3" id="edit-describe">${a.description}</textarea>
                         </div>
                     </div>
 
