@@ -8,25 +8,18 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.pei.listener.SysInitListener</listener-class>
+    </listener>
 
-    <display-name>ssm_web</display-name>
-
-    <!-- 配置 spring mvc 的核心控制器 -->
-    <servlet>
-        <servlet-name>springmvcDispatcherServlet</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <!-- 配置初始化参数，用于读取 springmvc 的配置文件 -->
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:springmvc.xml</param-value>
-        </init-param>
-        <!-- 配置 servlet 的对象的创建时间点：应用加载时创建。取值只能是非 0 正整数，表示启动顺序 -->
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>springmvcDispatcherServlet</servlet-name>
-        <url-pattern>*.do</url-pattern>
-    </servlet-mapping>
+    <!-- 手动指定 spring 配置文件位置 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring.xml</param-value>
+    </context-param>
 
 
     <!-- 配置 springMVC 编码过滤器 -->
@@ -51,17 +44,22 @@
     </filter-mapping>
 
 
-    <!-- 配置 spring 提供的监听器，用于启动服务时加载容器 。
-该间监听器只能加载 WEB-INF 目录中名称为 applicationContext.xml 的配置文件 -->
-    <listener>
-        <listener-class>
-            org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
-    <!-- 手动指定 spring 配置文件位置 -->
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring.xml</param-value>
-    </context-param>
+
+    <!-- 配置 spring mvc 的核心控制器 -->
+    <servlet>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!-- 配置初始化参数，用于读取 springmvc 的配置文件 -->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:springmvc.xml</param-value>
+        </init-param>
+        <!-- 配置 servlet 的对象的创建时间点：应用加载时创建。取值只能是非 0 正整数，表示启动顺序 -->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
 
 </web-app>

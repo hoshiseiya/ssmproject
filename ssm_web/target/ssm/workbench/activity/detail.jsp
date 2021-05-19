@@ -269,32 +269,32 @@
                         <label for="edit-marketActivityName" class="col-sm-2 control-label">名称<span
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-marketActivityName" value="发传单">
+                            <input type="text" class="form-control" id="edit-marketActivityName" value="${a.name}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-startTime" class="col-sm-2 control-label">开始日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-startTime" value="2020-10-10">
+                            <input type="text" class="form-control" id="edit-startTime" value="${a.startDate}">
                         </div>
                         <label for="edit-endTime" class="col-sm-2 control-label">结束日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-endTime" value="2020-10-20">
+                            <input type="text" class="form-control" id="edit-endTime" value="${a.endDate}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-cost" class="col-sm-2 control-label">成本</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-cost" value="5,000">
+                            <input type="text" class="form-control" id="edit-cost" value="${a.cost}">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="edit-describe" class="col-sm-2 control-label">描述</label>
                         <div class="col-sm-10" style="width: 81%;">
-                            <textarea class="form-control" rows="3" id="edit-describe">市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等</textarea>
+                            <textarea class="form-control" rows="3" id="edit-describe">${a.description}</textarea>
                         </div>
                     </div>
 
