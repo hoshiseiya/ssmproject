@@ -52,7 +52,7 @@
     </select>
 
     <select id="getActivityListByCondition" resultType="com.pei.domain.Activity">
-        select a.id,a.name, u.name as owner,a.startDate,a.endDate from activity a join user u on a.owner=u.id
+        select a.id,a.name, u.name as owner,a.startDate,a.endDate,a.createTime from activity a join user u on a.owner=u.id
         <where>
             <if test="name!=null and name!=''">
                 a.name like '%' #{name} '%'
@@ -72,12 +72,30 @@
     <select id="getActivityById" resultType="com.pei.domain.Activity">
         select * from activity where id = #{id}
     </select>
+
     <select id="detail" resultType="com.pei.domain.Activity">
         select
             a.id,u.name as owner,a.name,a.startDate,a.endDate,a.cost,a.description,a.createTime,a.createBy,a.editTime,a.editBy
         from activity a join user u on a.owner=u.id where a.id =#{id};
     </select>
+
     <select id="getRemarkListByAid" resultType="com.pei.domain.ActivityRemark">
             select * from activity_remark where activityId =#{id}
+    </select>
+
+    <select id="getActivityListByClueId" resultType="Activity">
+        select car.id as id,a.name,a.startDate,a.endDate,u.name as owner from activity a join user u on a.owner=u.id
+        join clue_activity_relation car on a.id=car.activityId where car.clueId=#{clueId};
+    </select>
+
+    <select id="getActivityListByName" resultType="Activity">
+        select a.id,a.name,a.startDate,a.endDate,u.name as owner
+        from activity a join user u on a.owner=u.id where a.name like '%' #{aname} '%';
+    </select>
+
+    <select id="getActivityListByNameAndNotByClueId" resultType="Activity">
+        select a.id,a.name,a.startDate,a.endDate,u.name as owner
+        from activity a join user u on a.owner=u.id where a.name like '%' #{aname} '%' and a.id not in (select activityId
+        from clue_activity_relation where clueId=#{clueId})
     </select>
 </mapper>

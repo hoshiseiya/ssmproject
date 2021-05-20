@@ -121,6 +121,9 @@ String basePath = request.getScheme() +
 							showActivityList();
 
 						//	清除搜索框中的信息,复选框中的勾关掉  清空activitySearchBody中的内容
+							$("#activityBundForm")[0].reset();
+							$("#qxBund").attr("checked",false);
+							$("#activitySearchBody").empty();
 
 						//	关闭模态窗口
 							$("#bundModal").modal("hide");
@@ -202,7 +205,7 @@ String basePath = request.getScheme() +
 				</div>
 				<div class="modal-body">
 					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
-						<form class="form-inline" role="form">
+						<form class="form-inline" role="form" id="activityBundForm">
 						  <div class="form-group has-feedback">
 						    <input id="aname" type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
 						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
@@ -212,7 +215,7 @@ String basePath = request.getScheme() +
 					<table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
 						<thead>
 							<tr style="color: #B3B3B3;">
-								<td><input type="checkbox"/></td>
+								<td><input id="qxBund" type="checkbox"/></td>
 								<td>名称</td>
 								<td>开始日期</td>
 								<td>结束日期</td>
@@ -555,20 +558,7 @@ String basePath = request.getScheme() +
 						</tr>
 					</thead>
 					<tbody id="activityBody">
-<%--						<tr>--%>
-<%--							<td>发传单</td>--%>
-<%--							<td>2020-10-10</td>--%>
-<%--							<td>2020-10-20</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>--%>
-<%--						</tr>--%>
-<%--						<tr>--%>
-<%--							<td>发传单</td>--%>
-<%--							<td>2020-10-10</td>--%>
-<%--							<td>2020-10-20</td>--%>
-<%--							<td>zhangsan</td>--%>
-<%--							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>--%>
-<%--						</tr>--%>
+
 					</tbody>
 				</table>
 			</div>

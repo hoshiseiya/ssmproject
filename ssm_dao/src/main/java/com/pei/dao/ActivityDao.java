@@ -30,4 +30,11 @@ public interface ActivityDao {
     Integer saveRemark(ActivityRemark ar);
 
     Integer updateRemark(ActivityRemark ar);
+
+    List<Activity> getActivityListByClueId(String clueId);
+
+    List<Activity> getActivityListByNameAndNotByClueId(Map<String, Object> map);
+
+    List<Activity> getActivityListByName(String aname);
+
 }

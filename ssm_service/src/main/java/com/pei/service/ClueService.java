@@ -3,6 +3,7 @@ package com.pei.service;
 import com.github.pagehelper.PageInfo;
 import com.pei.domain.Activity;
 import com.pei.domain.Clue;
+import com.pei.domain.Tran;
 
 import java.util.List;
 import java.util.Map;
@@ -15,4 +16,10 @@ public interface ClueService {
     Boolean save(Clue clue);
 
     Clue detail(String id);
+
+    boolean bund(String[] aid, String cid);
+
+    boolean unbund(String id);
+
+    boolean convert(String clueId, Tran t, String createBy);
 }

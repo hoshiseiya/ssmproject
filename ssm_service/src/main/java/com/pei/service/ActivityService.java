@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ActivityService {
-    List<Activity> findAllActivity();
+  List<Activity> findAllActivity();
 
     PageInfo pageList(Map<String, Object> map);
 
@@ -29,4 +29,10 @@ public interface ActivityService {
     Boolean saveRemark(ActivityRemark ar);
 
     Boolean updateRemark(ActivityRemark ar);
+
+    List<Activity> getActivityListByClueId(String clueId);
+
+    List<Activity> getActivityListByNameAndNotByClueId(Map<String, Object> map);
+
+    List<Activity> getActivityListByName(String aname);
 }

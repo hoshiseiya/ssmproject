@@ -1,5 +1,7 @@
 package com.pei.domain;
 
+import org.springframework.stereotype.Component;
+
 public class Tran {
 	
 	private String id;

@@ -54,4 +54,17 @@
 c.createTime,c.editBy,c.editTime,c.description,c.contactSummary,c.nextContactTime,c.address from clue c join user u on c.owner=u.id
 where c.id=#{id};
     </select>
+
+    <select id="getById" resultType="Clue">
+                select * from clue where id = #{clueId};
+        </select>
+
+    <delete id="deleteRemark">
+          delete from clue_remark where id = #{id}
+    </delete>
+
+    <select id="getListByClueId" resultType="ClueRemark">
+              select * from clue_remark where clueId = #{clueId};
+    </select>
+
 </mapper>

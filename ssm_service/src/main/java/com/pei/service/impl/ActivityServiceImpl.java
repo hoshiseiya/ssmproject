@@ -30,7 +30,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public PageInfo pageList(Map<String, Object> map) {
         PageHelper.startPage(Integer.parseInt((String) map.get("pageNum")), 4);//查第pageNum页，每页显示4条记录
-        PageHelper.orderBy("startDate desc");
+        PageHelper.orderBy("createTime desc");
         List<Activity> activityList = activityDao.getActivityListByCondition(map);
         PageInfo<Activity> pageInfo = new PageInfo<>(activityList);
         return pageInfo;
@@ -122,5 +122,23 @@ public class ActivityServiceImpl implements ActivityService {
             flag = false;
         }
         return flag;
+    }
+
+    @Override
+    public List<Activity> getActivityListByClueId(String clueId) {
+        List<Activity> activityList = activityDao.getActivityListByClueId(clueId);
+        return activityList;
+    }
+
+    @Override
+    public List<Activity> getActivityListByNameAndNotByClueId(Map<String, Object> map) {
+        List<Activity> activityList = activityDao.getActivityListByNameAndNotByClueId(map);
+        return activityList;
+    }
+
+    @Override
+    public List<Activity> getActivityListByName(String aname) {
+        List<Activity> activityList = activityDao.getActivityListByName(aname);
+        return activityList;
     }
 }

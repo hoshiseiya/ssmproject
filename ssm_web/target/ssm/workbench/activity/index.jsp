@@ -147,7 +147,6 @@
                             }
                         }
                     }
-                    alert(param);
                     $.ajax({
                         url: "activity/delete.do",
                         data: param,
