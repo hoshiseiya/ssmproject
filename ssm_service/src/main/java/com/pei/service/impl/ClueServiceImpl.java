@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pei.dao.ClueDao;
 import com.pei.dao.UserDao;
+import com.pei.domain.Activity;
 import com.pei.domain.Clue;
 import com.pei.domain.User;
 import com.pei.service.ClueService;
@@ -29,6 +30,16 @@ public class ClueServiceImpl implements ClueService {
     }
 
     @Override
+    public Boolean save(Clue clue) {
+        boolean flag = true;
+        int count = clueDao.save(clue);
+        if (count != 1) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
     public Boolean delete(String[] ids) {
         boolean flag = true;
 
@@ -39,5 +50,11 @@ public class ClueServiceImpl implements ClueService {
             flag = false;
         }
         return flag;
+    }
+
+    @Override
+    public Clue detail(String id) {
+        Clue c = clueDao.detail(id);
+        return c;
     }
 }

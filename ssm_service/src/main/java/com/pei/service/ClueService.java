@@ -1,6 +1,7 @@
 package com.pei.service;
 
 import com.github.pagehelper.PageInfo;
+import com.pei.domain.Activity;
 import com.pei.domain.Clue;
 
 import java.util.List;
@@ -11,5 +12,7 @@ public interface ClueService {
 
     Boolean delete(String[] ids);
 
-//    public PageInfo<Clue> getClueList(String pageNum);
+    Boolean save(Clue clue);
+
+    Clue detail(String id);
 }

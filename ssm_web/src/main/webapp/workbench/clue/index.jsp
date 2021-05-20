@@ -81,13 +81,14 @@
                     dataType: "json",
                     type: "post",
                     success: function (data) {
-                        //	返回成功或者失败就可以
+                        //    返回成功或者失败就可以
                         if (data) {
-                            //	刷新列表(掠过)
 
-                            //	关闭模态窗口
+                            pageList(1);
+
+                            $("#clueAddForm")[0].reset();
+                            //    关闭模态窗口
                             $("#createClueModal").modal("hide");
-
                         } else {
                             alert("添加线索失败");
                         }
@@ -159,6 +160,82 @@
                     })
                 }
             })
+            //	为修改按钮绑定事件，打开修改操作的模态窗口
+            $("#updateBtn").click(function () {
+
+                var $xz = $("input[name=xz]:checked");
+                if ($xz.length == 0) {
+                    alert("请选择需要修改的记录")
+                } else if ($xz.length > 1) {
+                    alert("您只能选择一条记录修改");
+                } else {
+                    var id = $xz.val();
+                    $.ajax({
+                        url: "clue/getUserListAndClue.do",
+                        data: {
+                            "id": id
+                        },
+                        dataType: "json",
+                        type: "get",
+                        success: function (data) {
+                            //	要市场活动对象和用户列表
+                            //	处理下拉框中的用户
+                            var html = "";
+                            $.each(data.userList, function (i, n) {
+                                html += "<option value='" + n.id + "'>" + n.name + "</option>"
+                            })
+                            $("#edit-owner").html(html);
+
+                            //	处理单条activity
+                            $("#edit-id").val(data.a.id);
+                            $("#edit-name").val(data.a.name);
+                            $("#edit-owner").val(data.a.owner);
+                            $("#edit-startDate").val(data.a.startDate);
+                            $("#edit-endDate").val(data.a.endDate);
+                            $("#edit-cost").val(data.a.cost);
+                            $("#edit-description").val(data.a.description);
+
+                            //	所有的值都填写好之后，打开修改操作的模态窗口
+                            $("#editActivityModal").modal("show");
+
+                        }
+                    })
+                }
+            })
+            //	为更新事件绑定事件，执行市场活动的更新操作
+            // 	一般更新操作都copy添加操作
+            $("#updateBtn").click(function () {
+                $.ajax({
+                    url: "activity/update.do",
+                    data: {
+                        "id": $.trim($("#edit-id").val()),
+                        "owner": $.trim($("#edit-owner").val()),
+                        "name": $.trim($("#edit-name").val()),
+                        "startDate": $.trim($("#edit-startDate").val()),
+                        "endDate": $.trim($("#edit-endDate").val()),
+                        "cost": $.trim($("#edit-cost").val()),
+                        "description": $.trim($("#edit-description").val())
+                    },
+                    dataType: "json",
+                    type: "post",
+                    success: function (data) {
+                        //    返回成功或者失败就可以
+                        if (data) {
+                            //    修改成功后
+                            //    刷新市场信息活动列表
+                            // pageList(1);
+                            //修改操作后，应该回到当前页，维持每页展现的记录数
+                            pageList(currentPage);
+
+                            //    关闭模态窗口
+                            $("#editActivityModal").modal("hide");
+                        } else {
+                            alert("修改市场活动失败")
+                        }
+                    }
+                })
+            })
+
         });
 
         function pageList(pageNum) {
@@ -300,7 +377,7 @@
                 <h4 class="modal-title" id="myModalLabel">创建线索</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form">
+                <form id="clueAddForm" class="form-horizontal" role="form">
 
                     <div class="form-group">
                         <label for="create-owner" class="col-sm-2 control-label">所有者<span
