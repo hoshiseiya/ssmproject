@@ -1,5 +1,13 @@
 package com.pei.service;
 
-public interface ClueService {
+import com.github.pagehelper.PageInfo;
+import com.pei.domain.Clue;
 
+import java.util.List;
+import java.util.Map;
+
+public interface ClueService {
+    PageInfo pageList(Map<String, Object> map);
+
+//    public PageInfo<Clue> getClueList(String pageNum);
 }
