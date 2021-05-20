@@ -8,4 +8,6 @@ import java.util.Map;
 public interface ClueDao {
 
     List<Clue> selectByCondition(Map<String, Object> map);
+
+    Integer delete(String[] ids);
 }

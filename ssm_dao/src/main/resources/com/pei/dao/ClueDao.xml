@@ -1,94 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pei.dao.ClueDao">
-<!--
+    <!--
 
-    <insert id="save">
-     insert into activity (id,owner,name,startDate,endDate, cost,description,createTime,createBy,editTime,editBy)
-    values(#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy},#{editTime},#{editBy})
-    </insert>
+        <insert id="save">
+         insert into activity (id,owner,name,startDate,endDate, cost,description,createTime,createBy,editTime,editBy)
+        values(#{id},#{owner},#{name},#{startDate},#{endDate},#{cost},#{description},#{createTime},#{createBy},#{editTime},#{editBy})
+        </insert>
 
-    <insert id="saveRemark">
-        insert into activity_remark (id,noteContent,createTime,createBy,editFlag,activityId) values (#{id},#{noteContent}, #{createTime},#{createBy},#{editFlag},#{activityId})
-    </insert>
+        <insert id="saveRemark">
+            insert into activity_remark (id,noteContent,createTime,createBy,editFlag,activityId) values (#{id},#{noteContent}, #{createTime},#{createBy},#{editFlag},#{activityId})
+        </insert>
 
-    <update id="update">
-         update activity set owner=#{owner},name=#{name},startDate =#{startDate},endDate=#{endDate},cost=#{cost},
-         description=#{description},editTime=#{editTime},editBy=#{editBy} where id = #{id}
-    </update>
+        <update id="update">
+             update activity set owner=#{owner},name=#{name},startDate =#{startDate},endDate=#{endDate},cost=#{cost},
+             description=#{description},editTime=#{editTime},editBy=#{editBy} where id = #{id}
+        </update>
 
-    <update id="updateRemark">
-         update activity_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag} where id=#{id}
+        <update id="updateRemark">
+             update activity_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag} where id=#{id}
 
-    </update>
+        </update>
 
+
+
+        <delete id="deleteRemark">
+                delete from activity_remark where id=#{id}
+        </delete>
+
+        <select id="findAll" resultType="com.pei.domain.Activity">
+            select a.id,a.name,u.name as owner,a.startDate,a.endDate from activity a join user u on a.owner=u.id
+            <where>
+                <if test="name!=null and name!=''">
+                    a.name like '%' #{name} '%'
+                </if>
+                <if test="owner!=null and owner !=''">
+                    and u.name like '%' #{owner} '%'
+                </if>
+                <if test="startDate!=null and startDate!=''">
+                    and a.startDate &gt; #{startDate}
+                </if>
+                <if test="endDate!=null and endDate !=''">
+                    and a.endDate &lt; #{endDate}
+                </if>
+            </where>
+        </select>
+    -->
     <delete id="delete">
-        delete from activity
+        delete from clue
         where id in
         <foreach collection="array" item="id" open="(" close=")" separator=",">
             #{id}
         </foreach>
     </delete>
 
-    <delete id="deleteRemark">
-            delete from activity_remark where id=#{id}
-    </delete>
-
-    <select id="findAll" resultType="com.pei.domain.Activity">
-        select a.id,a.name,u.name as owner,a.startDate,a.endDate from activity a join user u on a.owner=u.id
-        <where>
-            <if test="name!=null and name!=''">
-                a.name like '%' #{name} '%'
-            </if>
-            <if test="owner!=null and owner !=''">
-                and u.name like '%' #{owner} '%'
-            </if>
-            <if test="startDate!=null and startDate!=''">
-                and a.startDate &gt; #{startDate}
-            </if>
-            <if test="endDate!=null and endDate !=''">
-                and a.endDate &lt; #{endDate}
-            </if>
-        </where>
-    </select>
--->
-
     <select id="selectByCondition" resultType="com.pei.domain.Clue">
-        select c.id,c.fullname,c.company,c.phone,c.mphone,c.source,c.owner,c.state,u.name as owner,c.createTime from clue c join user u on c.owner=u.id
+        select c.id,c.fullname,c.company,c.phone,c.mphone,c.source,u.name as owner,c.state,c.createTime from clue c join
+        user u on c.owner=u.id
         <where>
+
             <if test="fullname!=null and fullname!=''">
-                c.fullname like '%' #{fullname} '%'
+                c.fullname like '%${fullname}%'
             </if>
+
             <if test="company!=null and company!=''">
-                and c.company like '%' #{company} '%'
+                and c.company like '%${company}%'
             </if>
+
             <if test="phone!=null and phone!=''">
-                and c.phone like '%' #{phone} '%'
+                and c.phone like '%${phone}%'
             </if>
+
             <if test="mphone!=null and mphone!=''">
-                and c.mphone like '%' #{mphone} '%'
+                and c.mphone like '%${mphone}%'
             </if>
+
             <if test="source!=null and source!=''">
                 and c.source = #{source}
             </if>
+
             <if test="owner!=null and owner!=''">
-                and c.owner like '%' #{owner} '%'
+                and u.name like '%${owner}%'
             </if>
+
             <if test="state!=null and state!=''">
                 and c.state = #{state}
             </if>
         </where>
     </select>
-<!--
-    <select id="getActivityById" resultType="com.pei.domain.Activity">
-        select * from activity where id = #{id}
-    </select>
-    <select id="detail" resultType="com.pei.domain.Activity">
-        select
-            a.id,u.name as owner,a.name,a.startDate,a.endDate,a.cost,a.description,a.createTime,a.createBy,a.editTime,a.editBy
-        from activity a join user u on a.owner=u.id where a.id =#{id};
-    </select>
-    <select id="getRemarkListByAid" resultType="com.pei.domain.ActivityRemark">
-            select * from activity_remark where activityId =#{id}
-    </select>-->
+    <!--
+        <select id="getActivityById" resultType="com.pei.domain.Activity">
+            select * from activity where id = #{id}
+        </select>
+        <select id="detail" resultType="com.pei.domain.Activity">
+            select
+                a.id,u.name as owner,a.name,a.startDate,a.endDate,a.cost,a.description,a.createTime,a.createBy,a.editTime,a.editBy
+            from activity a join user u on a.owner=u.id where a.id =#{id};
+        </select>
+        <select id="getRemarkListByAid" resultType="com.pei.domain.ActivityRemark">
+                select * from activity_remark where activityId =#{id}
+        </select>-->
 </mapper>

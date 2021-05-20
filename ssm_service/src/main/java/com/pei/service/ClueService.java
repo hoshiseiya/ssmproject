@@ -9,5 +9,7 @@ import java.util.Map;
 public interface ClueService {
     PageInfo pageList(Map<String, Object> map);
 
+    Boolean delete(String[] ids);
+
 //    public PageInfo<Clue> getClueList(String pageNum);
 }

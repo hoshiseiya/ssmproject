@@ -28,6 +28,9 @@
             <tx:method name="login" propagation="SUPPORTS" read-only="true"/>
         </tx:attributes>
     </tx:advice>
+
+    <tx:annotation-driven />
+
     <!-- 配置 aop -->
     <aop:config>
         <!-- 配置切入点表达式 -->

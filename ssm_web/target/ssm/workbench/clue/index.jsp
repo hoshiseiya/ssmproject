@@ -104,10 +104,10 @@
                 $("#hidden-fullname").val($.trim($("#search-fullname").val()))
                 $("#hidden-company").val($.trim($("#search-company").val()))
                 $("#hidden-phone").val($.trim($("#search-phone").val()))
-                $("#hidden-resource").val($.trim($("#search-resource").val()))
+                $("#hidden-source").val($.trim($("#search-source option:selected").text()))
                 $("#hidden-owner").val($.trim($("#search-owner").val()))
                 $("#hidden-mphone").val($.trim($("#search-mphone").val()))
-                $("#hidden-state").val($.trim($("#search-state").val()))
+                $("#hidden-state").val($.trim($("#search-state option:selected").text()))
                 pageList(1);
             })
             //	为全选的复选框绑定事件，触发全选操作
@@ -119,6 +119,46 @@
                 // alert("123");
                 $("#qx").prop("checked", $("input[name=xz]").length == $("input[name=xz]:checked").length);
             })
+
+            //	为删除事件绑定事件 执行市场活动删除操作
+            $("#deleteBtn").click(function () {
+                //	找到复选框中所有打勾的复选框的jquery 对象
+                var $xz = $("input[name=xz]:checked");
+                if ($xz.length == 0) {
+                    alert("请选择需要删除的记录");
+                } else {
+                    if (confirm("您确定要删除所选择的数据嘛")) {
+                        //肯定是选了 而且有可能是1条，有可能是多条
+                        // 	alert("123");
+                        //	拼接参数
+                        var param = "";
+                        //将$xz中的每一个dom对象遍历出来，取其value值，就相当于取得了需要删除的记录的id
+                        for (var i = 0; i < $xz.length; i++) {
+                            param += "id=" + $($xz[i]).val();
+                            //	如果不是最后一个元素，需要在后面追加一个&符
+                            if (i < $xz.length - 1) {
+                                param += "&";
+                            }
+                        }
+                    }
+                    $.ajax({
+                        url: "clue/delete.do",
+                        data: param,
+                        dataType: "json",
+                        type: "post",
+                        success: function (data) {
+                            //	返回成功或者失败都可以
+                            if (data) {
+                                //回到第一页，维持每页展现的记录数
+                                pageList(1);
+
+                            } else {
+                                alert("删除市场活动失败")
+                            }
+                        }
+                    })
+                }
+            })
         });
 
         function pageList(pageNum) {
@@ -126,7 +166,7 @@
             $("#search-fullname").val($.trim($("#hidden-fullname").val()))
             $("#search-company").val($.trim($("#hidden-company").val()))
             $("#search-phone").val($.trim($("#hidden-phone").val()))
-            $("#search-resource").val($.trim($("#hidden-resource").val()))
+            $("#search-source").val($.trim($("#hidden-source").val()))
             $("#search-owner").val($.trim($("#hidden-owner").val()))
             $("#search-mphone").val($.trim($("#hidden-mphone").val()))
             $("#search-state").val($.trim($("#hidden-state").val()))
@@ -138,7 +178,7 @@
                     "fullname": $.trim($("#search-fullname").val()),
                     "company": $.trim($("#search-company").val()),
                     "phone": $.trim($("#search-phone").val()),
-                    "source": $.trim($("#search-resource").val()),
+                    "source": $.trim($("#search-source").val()),
                     "owner": $.trim($("#search-owner").val()),
                     "mphone":$.trim($("#search-mphone").val()),
                     "state":$.trim($("#search-state").val())
@@ -244,7 +284,7 @@
 <input type="hidden" id="hidden-fullname">
 <input type="hidden" id="hidden-company">
 <input type="hidden" id="hidden-phone">
-<input type="hidden" id="hidden-resource">
+<input type="hidden" id="hidden-source">
 <input type="hidden" id="hidden-owner">
 <input type="hidden" id="hidden-mphone">
 <input type="hidden" id="hidden-state">
@@ -569,7 +609,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">线索来源</div>
-                        <select class="form-control">
+                        <select class="form-control" id="search-source">
                             <option></option>
                             <c:forEach items="${sourceList}" var="s">
                                 <option value="${s.value}">${s.text}</option>
@@ -578,8 +618,6 @@
                     </div>
                 </div>
 
-                <br>
-
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">所有者</div>
@@ -587,6 +625,7 @@
                     </div>
                 </div>
 
+                <br>
 
                 <div class="form-group">
                     <div class="input-group">
@@ -598,7 +637,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">线索状态</div>
-                        <select class="form-control">
+                        <select class="form-control" id="search-state">
                             <option></option>
                             <c:forEach items="${clueStateList}" var="c">
                                 <option value="${c.value}">${c.text}</option>
@@ -607,8 +646,8 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-default">查询</button>
-
+                <button id="searchBtn" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> 查询</button>
+                <button id="reset" type="reset" class="btn btn-default"><span class="glyphicon glyphicon-repeat"></span> 重置</button>
             </form>
         </div>
         <div class="btn-toolbar" role="toolbar"
@@ -617,10 +656,10 @@
                 <button id="addBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span>
                     创建
                 </button>
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span
+                <button id="updateBtn" type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span
                         class="glyphicon glyphicon-pencil"></span> 修改
                 </button>
-                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+                <button id="deleteBtn" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
             </div>
 
 

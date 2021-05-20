@@ -37,4 +37,13 @@ public class ClueController {
         PageInfo pageInfo = clueService.pageList(map);
         return Msg.success().add("pageInfo", pageInfo);
     }
+
+    @RequestMapping("/delete.do")
+    @ResponseBody
+    public Boolean delete(@RequestParam("id") String[] ids) {
+        Boolean flag = clueService.delete(ids);
+        return flag;
+    }
+
+
 }
