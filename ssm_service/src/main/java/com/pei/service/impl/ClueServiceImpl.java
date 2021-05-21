@@ -107,6 +107,42 @@ public class ClueServiceImpl implements ClueService {
     }
 
     @Override
+    public List<ClueRemark> getRemarkListByCid(String clueId) {
+        return clueDao.getRemarkListByCid(clueId);
+    }
+
+    @Override
+    public Boolean deleteRemarkById(String id) {
+        boolean flag = true;
+        int count = clueDao.deleteRemarkById(id);
+        if (count != 1) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public Boolean saveRemark(ClueRemark cr) {
+        Boolean flag = true;
+        int Count = clueDao.saveRemark(cr);
+        if (Count != 1) {
+            flag = false;
+        }
+        return flag;
+
+    }
+
+    @Override
+    public Boolean updateRemark(ClueRemark cr) {
+        Boolean flag = true;
+        int Count = clueDao.updateRemark(cr);
+        if (Count != 1) {
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
     public boolean convert(String clueId, Tran t, String createBy) {
         String createTime = DateTimeUtil.getSysTime();
 

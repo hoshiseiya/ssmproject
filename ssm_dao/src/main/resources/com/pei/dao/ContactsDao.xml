@@ -13,6 +13,10 @@ id,owner,source,customerId,fullname,appellation,email,mphone,job,birth,createBy,
     <insert id="saveRemark">
 insert into contacts_remark (id,noteContent,createTime,createBy,editFlag,contactsId)values (#{id},#{noteContent},#{createTime},#{createBy},#{editFlag},#{contactsId})
     </insert>
+
+    <select id="selectByCondition" resultType="com.pei.domain.Contacts" >
+        select con.id,con.fullname,u.name as owner,con.mphone,cus.name as customerId,con.source,con.createTime from contacts con join customer cus on con.customerId=cus.id join user u on con.owner = u.id
+    </select>
 </mapper>
 
 

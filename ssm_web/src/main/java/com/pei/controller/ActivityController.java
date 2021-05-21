@@ -48,7 +48,7 @@ public class ActivityController {
     public Boolean save(Activity activity, HttpServletRequest request) {
         activity.setId(UUIDUtil.getUUID());
         activity.setCreateTime(DateTimeUtil.getSysTime());
-        activity.setCreateBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        activity.setCreateBy(((User) request.getSession().getAttribute("user")).getName());
         System.out.println("接收到的对象 = " + activity);
         Boolean flag = activityService.save(activity);
         System.out.println("flag = " + flag);

@@ -1,9 +1,7 @@
 package com.pei.service;
 
 import com.github.pagehelper.PageInfo;
-import com.pei.domain.Activity;
-import com.pei.domain.Clue;
-import com.pei.domain.Tran;
+import com.pei.domain.*;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +18,14 @@ public interface ClueService {
     boolean bund(String[] aid, String cid);
 
     boolean unbund(String id);
+
+    List<ClueRemark> getRemarkListByCid(String clueId);
+
+    Boolean deleteRemarkById(String id);
+
+    Boolean saveRemark(ClueRemark cr);
+
+    Boolean updateRemark(ClueRemark ar);
 
     boolean convert(String clueId, Tran t, String createBy);
 }

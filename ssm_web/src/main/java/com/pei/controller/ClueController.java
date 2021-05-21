@@ -57,7 +57,7 @@ public class ClueController {
     public Boolean save(Clue clue, HttpServletRequest request) {
         clue.setId(UUIDUtil.getUUID());
         clue.setCreateTime(DateTimeUtil.getSysTime());
-        clue.setCreateBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        clue.setCreateBy(((User) request.getSession().getAttribute("user")).getName());
         System.out.println("接收到的对象 = " + clue);
         Boolean flag = clueService.save(clue);
         return flag;
@@ -150,4 +150,45 @@ public class ClueController {
         return mv;
     }
 
+
+    @RequestMapping("/getRemarkListById.do")
+    @ResponseBody
+    public List<ClueRemark> getRemarkListById(String clueId) {
+        List<ClueRemark> remarkList = clueService.getRemarkListByCid(clueId);
+        return remarkList;
+    }
+
+    @RequestMapping("/deleteRemark.do")
+    @ResponseBody
+    public Boolean deleteRemark(String id) {
+        Boolean flag = clueService.deleteRemarkById(id);
+        return flag;
+    }
+
+    @RequestMapping("/saveRemark.do")
+    @ResponseBody
+    public Map<String, Object> saveRemark(ClueRemark cr, HttpServletRequest request) {
+        cr.setId(UUIDUtil.getUUID());
+        cr.setCreateBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        cr.setCreateTime(DateTimeUtil.getSysTime());
+        cr.setEditFlag("0");
+        Boolean flag = clueService.saveRemark(cr);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", flag);
+        map.put("cr", cr);
+        return map;
+    }
+
+    @RequestMapping("/updateRemark.do")
+    @ResponseBody
+    public Map<String, Object> updateRemark(ClueRemark cr, HttpServletRequest request) {
+        cr.setEditBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        cr.setEditTime(DateTimeUtil.getSysTime());
+        cr.setEditFlag("1");
+        Boolean flag = clueService.updateRemark(cr);
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", flag);
+        map.put("cr", cr);
+        return map;
+    }
 }

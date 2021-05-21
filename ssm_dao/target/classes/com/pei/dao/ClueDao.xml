@@ -59,9 +59,25 @@ where c.id=#{id};
                 select * from clue where id = #{clueId};
         </select>
 
+    <select id="getRemarkListByCid" resultType="com.pei.domain.ClueRemark">
+            select * from clue_remark where clueId =#{id}
+    </select>
+
+    <insert id="saveRemark">
+        insert into clue_remark (id,noteContent,createTime,createBy,editFlag,clueId) values (#{id},#{noteContent}, #{createTime},#{createBy},#{editFlag},#{clueId})
+    </insert>
+
     <delete id="deleteRemark">
           delete from clue_remark where id = #{id}
     </delete>
+
+    <delete id="deleteRemarkById">
+            delete from clue_remark where id=#{id}
+    </delete>
+
+    <update id="updateRemark">
+         update clue_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag} where id=#{id}
+    </update>
 
     <select id="getListByClueId" resultType="ClueRemark">
               select * from clue_remark where clueId = #{clueId};

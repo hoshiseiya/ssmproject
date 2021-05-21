@@ -29,9 +29,107 @@ String basePath = request.getScheme() +
 			//防止下拉菜单消失
 	        e.stopPropagation();
 	    });
-		
+
+		pageList(1);
 	});
-	
+
+	function pageList(pageNum) {
+		$.ajax({
+			url: "customer/pageList.do",
+			contentType: "application/json",
+			dataType: "json",
+			type: "get",
+			data: {
+				"pageNum": pageNum
+			},
+			success: function (data) {
+				var html = "";
+				$.each(data.extend.pageInfo.list, function (i, n) {
+					html += '<tr class="active">';
+					html += '<td><input name="xz" type="checkbox" value="' + n.id + '"/></td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'customer/detail.do?id=' + n.id + '\';">' + n.name + '</a></td>';
+					html += '<td>' + n.owner + '</td>';
+					html += '<td>' + n.phone + '</td>';
+					html += '<td>' + n.website + '</td>';
+					html += '</tr>';
+				})
+				//1、解析并显示数据
+				$("#emps_table tbody").html(html);
+				//2、解析并显示分页信息
+				build_page_info(data);
+				//3、解析显示分页条数据
+				build_page_nav(data);
+			}
+		})
+		$("#qx").prop("checked", false);
+	}
+	//解析显示分页信息
+	function build_page_info(data) {
+		$("#page_info_area").empty();
+		$("#page_info_area").append("当前" + data.extend.pageInfo.pageNum + "页,总" +
+				data.extend.pageInfo.pages + "页,总" +
+				data.extend.pageInfo.total + "条记录");
+		totalRecord = data.extend.pageInfo.total;
+		currentPage = data.extend.pageInfo.pageNum;
+	}
+
+	//解析显示分页条，点击分页要能去下一页....
+	function build_page_nav(data) {
+		$("#page_nav_area").empty();
+		var ul = $("<ul></ul>").addClass("pagination");
+
+		//构建元素
+		var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "javascript:void(0)"));
+		var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
+		if (data.extend.pageInfo.hasPreviousPage == false) {
+			firstPageLi.addClass("disabled");
+			prePageLi.addClass("disabled");
+		} else {
+			//为元素添加点击翻页的事件
+			firstPageLi.click(function () {
+				pageList(1);
+			});
+			prePageLi.click(function () {
+				pageList(data.extend.pageInfo.pageNum - 1);
+			});
+		}
+
+		var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
+		var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "javascript:void(0)"));
+		if (data.extend.pageInfo.hasNextPage == false) {
+			nextPageLi.addClass("disabled");
+			lastPageLi.addClass("disabled");
+		} else {
+			nextPageLi.click(function () {
+				pageList(data.extend.pageInfo.pageNum + 1);
+			});
+			lastPageLi.click(function () {
+				pageList(data.extend.pageInfo.pages);
+			});
+		}
+
+		//添加首页和前一页 的提示
+		ul.append(firstPageLi).append(prePageLi);
+		//1,2，3遍历给ul中添加页码提示
+		$.each(data.extend.pageInfo.navigatepageNums, function (index, item) {
+
+			var numLi = $("<li></li>").append($("<a></a>").append(item));
+			if (data.extend.pageInfo.pageNum == item) {
+				numLi.addClass("active");
+			}
+			numLi.click(function () {
+				pageList(item);
+			});
+			ul.append(numLi);
+		});
+		//添加下一页和末页 的提示
+		ul.append(nextPageLi).append(lastPageLi);
+
+		//把ul加入到nav
+		var navEle = $("<nav></nav>").append(ul);
+		navEle.appendTo("#page_nav_area");
+	}
+
 </script>
 </head>
 <body>
@@ -261,7 +359,7 @@ String basePath = request.getScheme() +
 				
 			</div>
 			<div style="position: relative;top: 10px;">
-				<table class="table table-hover">
+				<table class="table table-hover" id="emps_table">
 					<thead>
 						<tr style="color: #B3B3B3;">
 							<td><input type="checkbox" /></td>
@@ -272,56 +370,16 @@ String basePath = request.getScheme() +
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.jsp';">动力节点</a></td>
-							<td>zhangsan</td>
-							<td>010-84846003</td>
-							<td>http://www.bjpowernode.com</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.jsp';">动力节点</a></td>
-                            <td>zhangsan</td>
-                            <td>010-84846003</td>
-                            <td>http://www.bjpowernode.com</td>
-                        </tr>
 					</tbody>
 				</table>
 			</div>
-			
-			<div style="height: 50px; position: relative;top: 30px;">
-				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
-				<div style="position: relative;top: -88px; left: 285px;">
-					<nav>
-						<ul class="pagination">
-							<li class="disabled"><a href="#">首页</a></li>
-							<li class="disabled"><a href="#">上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li class="disabled"><a href="#">末页</a></li>
-						</ul>
-					</nav>
+
+			<div class="row" style="position: relative;top:50px;">
+				<!--分页文字信息  -->
+				<div class="col-md-6" id="page_info_area"></div>
+				<!-- 分页条信息 -->
+				<div class="col-md-6" id="page_nav_area">
+
 				</div>
 			</div>
 			

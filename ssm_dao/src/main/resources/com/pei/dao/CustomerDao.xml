@@ -5,6 +5,10 @@
 
 <mapper namespace="com.pei.dao.CustomerDao">
 
+    <select id="selectByCondition" resultType="com.pei.domain.Customer" >
+        select c.id,c.name,c.website,c.phone,u.name as owner,c.createTime from customer c join user u on c.owner=u.id
+    </select>
+
     <select id="getCustomerName" resultType="String">
          select name from customer where name like '%' #{name} '%';
     </select>
@@ -22,6 +26,11 @@ id,owner,name,website,phone,createBy,createTime,contactSummary,nextContactTime,d
         insert into customer_remark (
 id,noteContent,createTime,createBy,editFlag,customerId) values (#{id},#{noteContent},#{createTime},#{createBy},#{editFlag},#{customerId})
     </insert>
+
+    <select id="detail" resultType="com.pei.domain.Customer">
+       select c.id,c.name,u.name as owner,c.website,c.phone,c.createBy,c.createTime,c.editBy,c.editTime,c.contactSummary,c.nextContactTime,c.description,c.address from customer c join user u on c.owner=u.id
+where c.id=#{id}
+    </select>
 </mapper>
 
 
