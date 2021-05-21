@@ -80,7 +80,7 @@
     </select>
 
     <select id="getRemarkListByAid" resultType="com.pei.domain.ActivityRemark">
-            select * from activity_remark where activityId =#{id}
+            select * from activity_remark where activityId =#{id} order by createTime desc
     </select>
 
     <select id="getActivityListByClueId" resultType="Activity">

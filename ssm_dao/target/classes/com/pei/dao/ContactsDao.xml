@@ -17,6 +17,24 @@ insert into contacts_remark (id,noteContent,createTime,createBy,editFlag,contact
     <select id="selectByCondition" resultType="com.pei.domain.Contacts" >
         select con.id,con.fullname,u.name as owner,con.mphone,cus.name as customerId,con.source,con.createTime from contacts con join customer cus on con.customerId=cus.id join user u on con.owner = u.id
     </select>
+
+    <select id="detail" resultType="com.pei.domain.Contacts">
+      select c.id,c.fullname,u.name as owner,c.source,cus.name as customerId,c.email,c.mphone,c.job,c.birth,c.createBy,c.createTime,c.editBy,c.editTime,c.contactSummary,c.nextContactTime,c.description,c.address from contacts c join user u on c.owner=u.id join customer cus on c.customerId = cus.id
+where c.id=#{id}
+    </select
+    >
+
+    <select id="getRemarkListByCid" resultType="com.pei.domain.ContactsRemark">
+            select * from contacts_remark where contactsId =#{id} order by createTime desc
+    </select>
+
+    <delete id="deleteRemark">
+            delete from contacts_remark where id=#{id}
+    </delete>
+
+    <update id="updateRemark">
+         update contacts_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag} where id=#{id}
+    </update>
 </mapper>
 
 

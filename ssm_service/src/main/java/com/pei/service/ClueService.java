@@ -25,7 +25,7 @@ public interface ClueService {
 
     Boolean saveRemark(ClueRemark cr);
 
-    Boolean updateRemark(ClueRemark ar);
+    Boolean updateRemark(ClueRemark cr);
 
     boolean convert(String clueId, Tran t, String createBy);
 }

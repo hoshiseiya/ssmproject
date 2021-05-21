@@ -55,13 +55,187 @@ String basePath = request.getScheme() +
 		$(".myHref").mouseout(function(){
 			$(this).children("span").css("color","#E6E6E6");
 		});
+
+		showRemarkList();
+		$("#remarkBody").on("mouseover", ".remarkDiv", function () {
+			$(this).children("div").children("div").show();
+		})
+
+		$("#remarkBody").on("mouseout", ".remarkDiv", function () {
+			$(this).children("div").children("div").hide();
+		})
+		//    为保存按钮绑定事件，执行备注添加的操作
+		$("#saveRemarkBtn").click(function () {
+			if ($("#remark").val() == "") {
+				alert("请输入备份再保存");
+				return false;
+			}
+			$.ajax({
+				url: "customer/saveRemark.do",
+				data: {
+					"noteContent": $.trim($("#remark").val()),
+					"customerId": "${c.id}"
+				},
+				dataType: "json",
+				type: "post",
+				success: function (data) {
+					//    返回成功或者失败
+					if (data.success) {
+						//    添加成功
+						//    将文本域中的信息清空
+						$("#remark").val("");
+						//    在文本域上方新增div
+						var html = "";
+
+						html += '<div id="' + data.cr.id + '" class="remarkDiv" style="height: 60px;">';
+						html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+						html += '<div style="position: relative; top: -40px; left: 40px;" >';
+						html += '<h5>' + data.cr.noteContent + '</h5>';
+						html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${c.name}</b> <small style="color: gray;"> ' + (data.cr.createTime) + ' 由' + (data.cr.createBy) + '</small>';
+						html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+						html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + data.cr.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+						html += '&nbsp;&nbsp;&nbsp;&nbsp;';
+						html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\'' + data.cr.id + '\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+						html += '</div>';
+						html += '</div>';
+						html += '</div>';
+
+						$("#remarkDiv").before(html);
+					} else {
+						alert("添加备注失败");
+					}
+
+				}
+			})
+		})
+
+		//为更新按钮来绑定事件
+		$("#updateRemarkBtn").click(function () {
+			if(confirm("确认修改吗?")){
+				var id = $("#remarkId").val();
+				$.ajax({
+					url: "customer/updateRemark.do",
+					data: {
+						"id": id,
+						"noteContent": $.trim($("#noteContent").val())
+					},
+					dataType: "json",
+					type: "post",
+					success: function (data) {
+
+						/*需要成功或者失败  还需要一个cr对象来更新信息*/
+						if (data.success) {
+							//    修改备注成功
+							//    更新div中相应的信息，需要更新的内容有 noteContent editTime editBy
+							$("#e" + id).html(data.cr.noteContent);
+							$("#s" + id).html(data.cr.editTime + " 由" + data.cr.editBy);
+							//    更新内容之后 关闭模态窗口
+							$("#editRemarkModal").modal("hide");
+						} else {
+							alert("修改备注失败");
+						}
+					}
+				})
+			}
+		})
 	});
-	
+
+	function showRemarkList() {
+		$.ajax({
+			url: "customer/getRemarkListById.do",
+			data: {
+				"customerId": "${c.id}"
+			},
+			dataType: "json",
+			type: "get",
+			success: function (data) {
+				/*
+                * data是一个备注的数组
+                * */
+				var html = "";
+				$.each(data, function (i, n) {
+					html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
+					html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+					html += '<div style="position: relative; top: -40px; left: 40px;" >';
+					html += '<h5 id="e' + n.id + '">' + n.noteContent + '</h5>';
+					html += '<font color="gray">客户</font> <font color="gray">-</font> <b>${c.name}</b> <small id="s' + n.id + '"style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
+					html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+					html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + n.id + '\')"><span id="span1" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+					html += '&nbsp;&nbsp;&nbsp;&nbsp;';
+					html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\'' + n.id + '\')"><span id="span1" class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+					html += '</div>';
+					html += '</div>';
+					html += '</div>';
+				})
+				$("#remarkDiv").before(html);
+
+			}
+		})
+	}
+
+	function deleteRemark(id) {
+		if (confirm("确定要删除吗?")) {
+			$.ajax({
+				url: "customer/deleteRemark.do",
+				data: {"id": id},
+				dataType: "json",
+				type: "post",
+				success: function (flag) {
+					if (flag == true) {
+						// showRemarkList();
+						$("#" + id).remove();
+					} else {
+						alert("删除失败");
+					}
+				}
+			})
+		}
+	}
+
+	function editRemark(id) {
+		// alert(id);
+		//将模态窗口中，隐藏域中的id赋值
+		$("#remarkId").val(id);
+		//找到指定的存放备注信息的h5的标签
+		var noteContent = $("#e" + id).html();
+		//将h5中展现出来的信息，赋予到修改操作模态窗口的文本域中
+		$("#noteContent").val(noteContent);
+		//将模态窗口打开
+		$("#editRemarkModal").modal("show");
+	}
 </script>
 
 </head>
 <body>
-
+<!-- 修改备注的模态窗口 -->
+<div class="modal fade" id="editRemarkModal" role="dialog">
+	<%-- 备注的id --%>
+	<input type="hidden" id="remarkId">
+	<div class="modal-dialog" role="document" style="width: 40%;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">修改备注</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="edit-describe" class="col-sm-2 control-label">内容</label>
+						<div class="col-sm-10" style="width: 81%;">
+							<textarea class="form-control" rows="3" id="noteContent"></textarea>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary" id="updateRemarkBtn">更新</button>
+			</div>
+		</div>
+	</div>
+</div>
 	<!-- 删除联系人的模态窗口 -->
 	<div class="modal fade" id="removeContactsModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 30%;">
@@ -402,29 +576,21 @@ String basePath = request.getScheme() +
             <div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
         </div>
 	</div>
-	
+
 	<!-- 备注 -->
-	<div style="position: relative; top: 10px; left: 40px;">
+	<div id="remarkBody" style="position: relative; top: 30px; left: 40px;">
 		<div class="page-header">
 			<h4>备注</h4>
 		</div>
-		
-		<!-- 备注1 -->
-		<div class="remarkDiv" style="height: 60px;">
-			<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">
-			<div style="position: relative; top: -40px; left: 40px;" >
 
-			</div>
-		</div>
-		
 
-		
-		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
+		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 75px;">
 			<form role="form" style="position: relative;top: 10px; left: 10px;">
-				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
+            <textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"
+					  placeholder="添加备注..."></textarea>
 				<p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
 					<button id="cancelBtn" type="button" class="btn btn-default">取消</button>
-					<button type="button" class="btn btn-primary">保存</button>
+					<button id="saveRemarkBtn" type="button" class="btn btn-primary">保存</button>
 				</p>
 			</form>
 		</div>

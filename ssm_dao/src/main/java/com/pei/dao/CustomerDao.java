@@ -1,7 +1,5 @@
 package com.pei.dao;
 
-
-import com.pei.domain.Clue;
 import com.pei.domain.Customer;
 import com.pei.domain.CustomerRemark;
 
@@ -18,7 +16,13 @@ public interface CustomerDao {
 
     List<String> getCustomerName(String name);
 
-    int saveRemark(CustomerRemark customerRemark);
+    List<CustomerRemark> getRemarkListByCid(String customerId);
+
+    Integer deleteRemark(String id);
+
+    Integer saveRemark(CustomerRemark cr);
+
+    Integer updateRemark(CustomerRemark cr);
 
     Customer detail(String id);
 

@@ -157,15 +157,15 @@
                     * */
                     var html = "";
                     $.each(data, function (i, n) {
-                        html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
+                        html += '<div id="'+n.id+'" class="remarkDiv" style="height: 60px;">';
                         html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                         html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                        html += '<h5 id="e' + n.id + '">' + n.noteContent + '</h5>';
+                        html += '<h5 id="e'+n.id+'">'+n.noteContent+'</h5>';
                         html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${a.name}</b> <small id="s' + n.id + '"style="color: gray;"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
                         html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
-                        html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + n.id + '\')"><span id="span1" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                        html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\''+n.id+'\')"><span id="span1" class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '&nbsp;&nbsp;&nbsp;&nbsp;';
-                        html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\'' + n.id + '\')"><span id="span1" class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+                        html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\''+n.id+'\')"><span id="span1" class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '</div>';
                         html += '</div>';
                         html += '</div>';
@@ -200,7 +200,7 @@
             //将模态窗口中，隐藏域中的id赋值
             $("#remarkId").val(id);
             //找到指定的存放备注信息的h5的标签
-            var noteContent = $("#e" + id).html();
+            var noteContent = $("#e"+id).html();
             //将h5中展现出来的信息，赋予到修改操作模态窗口的文本域中
             $("#noteContent").val(noteContent);
             //将模态窗口打开

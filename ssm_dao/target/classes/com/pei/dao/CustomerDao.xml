@@ -27,6 +27,18 @@ id,owner,name,website,phone,createBy,createTime,contactSummary,nextContactTime,d
 id,noteContent,createTime,createBy,editFlag,customerId) values (#{id},#{noteContent},#{createTime},#{createBy},#{editFlag},#{customerId})
     </insert>
 
+    <select id="getRemarkListByCid" resultType="com.pei.domain.CustomerRemark">
+            select * from customer_remark where customerId =#{id} order by createTime desc
+    </select>
+
+    <delete id="deleteRemark">
+            delete from customer_remark where id=#{id}
+    </delete>
+
+    <update id="updateRemark">
+         update customer_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime},editFlag=#{editFlag} where id=#{id}
+    </update>
+
     <select id="detail" resultType="com.pei.domain.Customer">
        select c.id,c.name,u.name as owner,c.website,c.phone,c.createBy,c.createTime,c.editBy,c.editTime,c.contactSummary,c.nextContactTime,c.description,c.address from customer c join user u on c.owner=u.id
 where c.id=#{id}
