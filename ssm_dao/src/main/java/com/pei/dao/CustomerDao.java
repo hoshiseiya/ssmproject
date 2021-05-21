@@ -21,4 +21,6 @@ public interface CustomerDao {
     int saveRemark(CustomerRemark customerRemark);
 
     Customer detail(String id);
+
+    List<Map<String, Object>> getCharts();
 }

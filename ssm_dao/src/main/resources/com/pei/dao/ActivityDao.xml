@@ -98,4 +98,8 @@
         from activity a join user u on a.owner=u.id where a.name like '%' #{aname} '%' and a.id not in (select activityId
         from clue_activity_relation where clueId=#{clueId})
     </select>
+
+    <select id="getChart" resultType="com.pei.domain.Activity">
+        select name,cost from activity
+    </select>
 </mapper>

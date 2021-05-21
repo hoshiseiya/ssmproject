@@ -11,6 +11,7 @@ import com.pei.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,5 +141,22 @@ public class ActivityServiceImpl implements ActivityService {
     public List<Activity> getActivityListByName(String aname) {
         List<Activity> activityList = activityDao.getActivityListByName(aname);
         return activityList;
+    }
+
+    @Override
+    public Map<String, Object> getChart() {
+        List<Activity> list = activityDao.getChart();
+        List<String> nameList = new ArrayList<>();
+        List<Integer> costList = new ArrayList<>();
+        for (Activity activity : list) {
+            String name = activity.getName();
+            String cost = activity.getCost();
+            nameList.add(name);
+            costList.add(Integer.parseInt(cost));
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("nameList",nameList);
+        map.put("costList",costList);
+        return map;
     }
 }

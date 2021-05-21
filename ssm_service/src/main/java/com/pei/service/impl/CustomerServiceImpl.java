@@ -3,13 +3,12 @@ package com.pei.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pei.dao.CustomerDao;
-
-import com.pei.domain.Clue;
 import com.pei.domain.Customer;
 import com.pei.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @Service
@@ -29,5 +28,13 @@ private CustomerDao customerDao;
     public Customer detail(String id) {
         Customer c = customerDao.detail(id);
         return c;
+    }
+
+    @Override
+    public Map<String, Object> getChart() {
+        List<Map<String,Object>> dataList = customerDao.getCharts();
+        Map<String, Object> map = new HashMap<>();
+        map.put("dataList",dataList);
+        return map;
     }
 }

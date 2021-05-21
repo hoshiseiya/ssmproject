@@ -23,17 +23,13 @@ String basePath = request.getScheme() +
 <script type="text/javascript">
 
 	$(function(){
-		
-		
-		
+
 	});
 	
 </script>
 </head>
 <body>
 
-	
-	
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">
@@ -70,7 +66,7 @@ String basePath = request.getScheme() +
 				    </div>
 				  </div>
 				  
-				  <br>
+
 				  
 				  <div class="form-group">
 				    <div class="input-group">
@@ -100,7 +96,9 @@ String basePath = request.getScheme() +
 					  </select>
 				    </div>
 				  </div>
-				  
+					
+					<br>
+
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">来源</div>
@@ -171,7 +169,7 @@ String basePath = request.getScheme() +
 						</tr>
                         <tr class="active">
                             <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='transaction/detail.jsp';">唐山师范学院</a></td>
+                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='transaction/detail.jsp';">湖北理工学院</a></td>
                             <td>唐山师范学院</td>
                             <td>谈判/复审</td>
                             <td>新业务</td>

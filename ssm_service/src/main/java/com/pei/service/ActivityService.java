@@ -35,4 +35,6 @@ public interface ActivityService {
     List<Activity> getActivityListByNameAndNotByClueId(Map<String, Object> map);
 
     List<Activity> getActivityListByName(String aname);
+
+  Map<String, Object> getChart();
 }

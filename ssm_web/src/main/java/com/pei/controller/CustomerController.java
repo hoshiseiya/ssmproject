@@ -37,4 +37,10 @@ public class CustomerController {
         return mv;
     }
 
+    @RequestMapping("/getCharts.do")
+    @ResponseBody
+    public Map<String, Object> getCharts() {
+        Map<String, Object> map = customerService.getChart();
+        return map;
+    }
 }

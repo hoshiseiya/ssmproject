@@ -9,4 +9,6 @@ public interface CustomerService {
     PageInfo pageList(Map<String, Object> map);
 
     Customer detail(String id);
+
+    Map<String, Object> getChart();
 }

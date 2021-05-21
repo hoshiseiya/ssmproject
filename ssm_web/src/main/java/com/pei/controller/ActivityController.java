@@ -106,7 +106,7 @@ public class ActivityController {
     public Map<String, Object> saveRemark(ActivityRemark ar, HttpServletRequest request) {
         System.out.println("ar = " + ar);
         ar.setId(UUIDUtil.getUUID());
-        ar.setCreateBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        ar.setCreateBy(((User) request.getSession().getAttribute("user")).getName());
         ar.setCreateTime(DateTimeUtil.getSysTime());
         ar.setEditFlag("0");
         Boolean flag = activityService.saveRemark(ar);
@@ -119,13 +119,20 @@ public class ActivityController {
     @RequestMapping("/updateRemark.do")
     @ResponseBody
     public Map<String, Object> updateRemark(ActivityRemark ar, HttpServletRequest request) {
-        ar.setEditBy(((User) request.getSession().getAttribute("user")).getCreateBy());
+        ar.setEditBy(((User) request.getSession().getAttribute("user")).getName());
         ar.setEditTime(DateTimeUtil.getSysTime());
         ar.setEditFlag("1");
         Boolean flag = activityService.updateRemark(ar);
         Map<String, Object> map = new HashMap<>();
         map.put("success", flag);
         map.put("ar", ar);
+        return map;
+    }
+
+    @RequestMapping("/getCharts.do")
+    @ResponseBody
+    public Map<String, Object> getCharts() {
+        Map<String, Object> map = activityService.getChart();
         return map;
     }
 }

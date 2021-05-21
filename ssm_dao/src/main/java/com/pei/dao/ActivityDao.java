@@ -37,4 +37,5 @@ public interface ActivityDao {
 
     List<Activity> getActivityListByName(String aname);
 
+    List<Activity> getChart();
 }

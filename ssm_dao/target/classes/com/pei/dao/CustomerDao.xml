@@ -30,6 +30,11 @@ id,noteContent,createTime,createBy,editFlag,customerId) values (#{id},#{noteCont
     <select id="detail" resultType="com.pei.domain.Customer">
        select c.id,c.name,u.name as owner,c.website,c.phone,c.createBy,c.createTime,c.editBy,c.editTime,c.contactSummary,c.nextContactTime,c.description,c.address from customer c join user u on c.owner=u.id
 where c.id=#{id}
+    </select
+    >
+
+    <select id="getCharts" resultType="java.util.Map">
+        select count(*) as value,cus.name from customer cus JOIN contacts con on cus.id = con.customerId group by cus.id
     </select>
 </mapper>
 
