@@ -2,6 +2,8 @@ package com.pei.controller;
 
 
 import com.pei.domain.User;
+import com.pei.exception.LoginException;
+import com.pei.exception.MyUserException;
 import com.pei.service.UserService;
 import com.pei.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class UserController {
             User user = userService.login(loginAct, loginPwd, ip);
             request.getSession().setAttribute("user", user);
             map.put("success", true);
-        } catch (Exception e) {
+        } catch (MyUserException e) {
             //            一旦执行catch块 表示抛出异常 登录失败
             e.printStackTrace();
             String msg = e.getMessage();

@@ -39,6 +39,8 @@ public class GlobalExceptionHandler {
         return mv;
     }
 
+
+
    /* @ExceptionHandler
     public ModelAndView doOtherException(Exception e){
         System.out.println("doOtherException = " + e);

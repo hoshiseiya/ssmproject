@@ -41,7 +41,7 @@ String basePath = request.getScheme() +
 			var loginPwd=$.trim($("#loginPwd").val());
 
 			if(loginAct =="" ||loginPwd ==""){
-				$("#msg").html("您的账号密码为空");
+				$("#msg").html("您的账号或密码为空");
 			//	如果账号密码为空，则需要强制终止该方法
 				return false;
 			}
