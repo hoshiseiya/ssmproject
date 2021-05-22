@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String basePath = request.getScheme() +
 "://"
@@ -73,15 +74,9 @@ String basePath = request.getScheme() +
 				      <div class="input-group-addon">阶段</div>
 					  <select class="form-control">
 					  	<option></option>
-					  	<option>资质审查</option>
-					  	<option>需求分析</option>
-					  	<option>价值建议</option>
-					  	<option>确定决策者</option>
-					  	<option>提案/报价</option>
-					  	<option>谈判/复审</option>
-					  	<option>成交</option>
-					  	<option>丢失的线索</option>
-					  	<option>因竞争丢失关闭</option>
+						  <c:forEach items="${state}" var="a">
+							  <option value="${a.value}">${a.text}</option>
+						  </c:forEach>
 					  </select>
 				    </div>
 				  </div>
@@ -104,20 +99,9 @@ String basePath = request.getScheme() +
 				      <div class="input-group-addon">来源</div>
 				      <select class="form-control" id="create-clueSource">
 						  <option></option>
-						  <option>广告</option>
-						  <option>推销电话</option>
-						  <option>员工介绍</option>
-						  <option>外部介绍</option>
-						  <option>在线商场</option>
-						  <option>合作伙伴</option>
-						  <option>公开媒介</option>
-						  <option>销售邮件</option>
-						  <option>合作伙伴研讨会</option>
-						  <option>内部研讨会</option>
-						  <option>交易会</option>
-						  <option>web下载</option>
-						  <option>web调研</option>
-						  <option>聊天</option>
+						  <c:forEach items="${source}" var="a">
+							  <option value="${a.value}">${a.text}</option>
+						  </c:forEach>
 						</select>
 				    </div>
 				  </div>
@@ -135,7 +119,7 @@ String basePath = request.getScheme() +
 			</div>
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 10px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
-				  <button type="button" class="btn btn-primary" onclick="window.location.href='transaction/add.do';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+				  <button type="button" class="btn btn-primary" onclick="window.location.href='tran/add.do';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" onclick="window.location.href='edit.html';"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
@@ -159,8 +143,8 @@ String basePath = request.getScheme() +
 					<tbody>
 						<tr>
 							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='transaction/detail.do?id=df4bbb00a72948fcb1c96fe8a604c7ba';">交易123</a></td>
-							<td>唐山师范学院</td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='tran/detail.do?id=df4bbb00a72948fcb1c96fe8a604c7ba';">交易123</a></td>
+							<td>湖北理工学院</td>
 							<td>谈判/复审</td>
 							<td>新业务</td>
 							<td>zhangsan</td>
@@ -169,8 +153,8 @@ String basePath = request.getScheme() +
 						</tr>
                         <tr class="active">
                             <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='transaction/detail.jsp';">湖北理工学院</a></td>
-                            <td>唐山师范学院</td>
+                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='tran/detail.jsp';">湖北理工学院</a></td>
+                            <td>湖北理工学院</td>
                             <td>谈判/复审</td>
                             <td>新业务</td>
                             <td>zhangsan</td>

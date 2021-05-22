@@ -1,2 +1,8 @@
+com\pei\controller\TranController.class
+com\pei\controller\CustomerController.class
+com\pei\controller\ContactsController.class
+com\pei\controller\ClueController.class
+com\pei\controller\DicController.class
 com\pei\controller\UserController.class
+com\pei\listener\SysInitListener.class
 com\pei\controller\ActivityController.class

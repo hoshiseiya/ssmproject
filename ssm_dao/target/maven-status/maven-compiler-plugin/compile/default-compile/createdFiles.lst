@@ -1,3 +1,11 @@
-com\pei\dao\ActivityRemark.class
+com\pei\dao\CustomerDao.class
+com\pei\dao\ContactsDao.class
 com\pei\dao\ActivityDao.class
+com\pei\dao\TranHistoryDao.class
 com\pei\dao\UserDao.class
+com\pei\dao\ContactsActivityRelationDao.class
+com\pei\dao\DicTypeDao.class
+com\pei\dao\ClueDao.class
+com\pei\dao\DicValueDao.class
+com\pei\dao\ClueActivityRelationDao.class
+com\pei\dao\TranDao.class

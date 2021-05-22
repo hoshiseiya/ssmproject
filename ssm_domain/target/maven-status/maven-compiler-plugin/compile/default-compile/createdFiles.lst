@@ -1,4 +1,16 @@
+com\pei\domain\ContactsActivityRelation.class
 com\pei\domain\Activity.class
+com\pei\domain\Contacts.class
+com\pei\domain\ContactsRemark.class
+com\pei\domain\Customer.class
+com\pei\domain\CustomerRemark.class
+com\pei\domain\Tran.class
+com\pei\domain\Clue.class
 com\pei\domain\Msg.class
 com\pei\domain\ActivityRemark.class
+com\pei\domain\DicType.class
+com\pei\domain\DicValue.class
+com\pei\domain\ClueRemark.class
+com\pei\domain\TranHistory.class
 com\pei\domain\User.class
+com\pei\domain\ClueActivityRelation.class

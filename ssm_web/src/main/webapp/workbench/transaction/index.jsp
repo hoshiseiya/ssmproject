@@ -119,7 +119,7 @@ String basePath = request.getScheme() +
 			</div>
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 10px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
-				  <button type="button" class="btn btn-primary" onclick="window.location.href='transaction/add.do';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+				  <button type="button" class="btn btn-primary" onclick="window.location.href='tran/add.do';"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" onclick="window.location.href='edit.html';"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
@@ -143,8 +143,8 @@ String basePath = request.getScheme() +
 					<tbody>
 						<tr>
 							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='transaction/detail.do?id=df4bbb00a72948fcb1c96fe8a604c7ba';">交易123</a></td>
-							<td>唐山师范学院</td>
+							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='tran/detail.do?id=df4bbb00a72948fcb1c96fe8a604c7ba';">交易123</a></td>
+							<td>湖北理工学院</td>
 							<td>谈判/复审</td>
 							<td>新业务</td>
 							<td>zhangsan</td>
@@ -153,7 +153,7 @@ String basePath = request.getScheme() +
 						</tr>
                         <tr class="active">
                             <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='transaction/detail.jsp';">湖北理工学院</a></td>
+                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='tran/detail.jsp';">湖北理工学院</a></td>
                             <td>湖北理工学院</td>
                             <td>谈判/复审</td>
                             <td>新业务</td>

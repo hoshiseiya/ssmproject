@@ -90,4 +90,10 @@ public class CustomerServiceImpl implements CustomerService {
         return contactsList;
     }
 
+    @Override
+    public List<String> getCustomerName(String name) {
+        List<String> sList = customerDao.getCustomerName(name);
+        return sList;
+    }
+
 }

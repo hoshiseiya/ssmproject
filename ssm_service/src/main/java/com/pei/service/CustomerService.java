@@ -24,4 +24,6 @@ public interface CustomerService {
     Map<String, Object> getChart();
 
     List<Contacts> getContactsListById(String id);
+
+    List<String> getCustomerName(String name);
 }

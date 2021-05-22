@@ -28,6 +28,10 @@ where c.id=#{id}
             select * from contacts_remark where contactsId =#{id} order by createTime desc
     </select>
 
+    <select id="getContactsListById" resultType="com.pei.domain.Contacts">
+        select * from contacts where customerId = #{id} order by createTime desc
+    </select>
+
     <delete id="deleteRemark">
             delete from contacts_remark where id=#{id}
     </delete>
