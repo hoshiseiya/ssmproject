@@ -32,7 +32,7 @@ public class UserController {
             User user = userService.login(loginAct, loginPwd, ip);
             request.getSession().setAttribute("user", user);
             map.put("success", true);
-        } catch (MyUserException e) {
+        } catch (Exception e) {
             //            一旦执行catch块 表示抛出异常 登录失败
             e.printStackTrace();
             String msg = e.getMessage();

@@ -28,17 +28,17 @@
 
         $(function () {
 
-            $("#addBtn").click(function () {
-                //时间控件
-                $(".time").datetimepicker({
-                    minView: "month",
-                    language: 'zh-CN',
-                    format: 'yyyy-mm-dd',
-                    autoclose: true,
-                    todayBtn: true,
-                    pickerPosition: "bottom-left"
-                });
+            //时间控件
+            $(".time").datetimepicker({
+                minView: "month",
+                language: 'zh-CN',
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayBtn: true,
+                pickerPosition: "bottom-left"
+            });
 
+            $("#addBtn").click(function () {
                 $.ajax({
                     url: "activity/findAll.do",
                     dataType: "json",
@@ -300,7 +300,7 @@
 
             //构建元素
             var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "javascript:void(0)"));
-            var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
+            var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href", "javascript:void(0)"));
             if (data.extend.pageInfo.hasPreviousPage == false) {
                 firstPageLi.addClass("disabled");
                 prePageLi.addClass("disabled");
@@ -314,7 +314,7 @@
                 });
             }
 
-            var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
+            var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href", "javascript:void(0)"));
             var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "javascript:void(0)"));
             if (data.extend.pageInfo.hasNextPage == false) {
                 nextPageLi.addClass("disabled");
@@ -333,7 +333,7 @@
             //1,2，3遍历给ul中添加页码提示
             $.each(data.extend.pageInfo.navigatepageNums, function (index, item) {
 
-                var numLi = $("<li></li>").append($("<a></a>").append(item));
+                var numLi = $("<li></li>").append($("<a></a>").append(item).attr("href", "javascript:void(0)"));
                 if (data.extend.pageInfo.pageNum == item) {
                     numLi.addClass("active");
                 }
@@ -533,7 +533,8 @@
                     </div>
                 </div>
 
-                <button id="searchBtn" type="button" class="btn btn-default">查询</button>
+                <button id="searchBtn" type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> 查询</button>
+                <button id="reset" type="reset" class="btn btn-default"><span class="glyphicon glyphicon-repeat"></span> 重置</button>
 
             </form>
         </div>

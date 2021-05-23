@@ -304,7 +304,7 @@
 
             //构建元素
             var firstPageLi = $("<li></li>").append($("<a></a>").append("首页").attr("href", "javascript:void(0)"));
-            var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;"));
+            var prePageLi = $("<li></li>").append($("<a></a>").append("&laquo;").attr("href", "javascript:void(0)"));
             if (data.extend.pageInfo.hasPreviousPage == false) {
                 firstPageLi.addClass("disabled");
                 prePageLi.addClass("disabled");
@@ -318,7 +318,7 @@
                 });
             }
 
-            var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;"));
+            var nextPageLi = $("<li></li>").append($("<a></a>").append("&raquo;").attr("href", "javascript:void(0)"));
             var lastPageLi = $("<li></li>").append($("<a></a>").append("末页").attr("href", "javascript:void(0)"));
             if (data.extend.pageInfo.hasNextPage == false) {
                 nextPageLi.addClass("disabled");
@@ -337,7 +337,7 @@
             //1,2，3遍历给ul中添加页码提示
             $.each(data.extend.pageInfo.navigatepageNums, function (index, item) {
 
-                var numLi = $("<li></li>").append($("<a></a>").append(item));
+                var numLi = $("<li></li>").append($("<a></a>").append(item).attr("href", "javascript:void(0)"));
                 if (data.extend.pageInfo.pageNum == item) {
                     numLi.addClass("active");
                 }
@@ -529,7 +529,7 @@
                         <label for="edit-company" class="col-sm-2 control-label">公司<span
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-company" value="动力节点">
+                            <input type="text" class="form-control" id="edit-company" value="湖北理工学院">
                         </div>
                     </div>
 

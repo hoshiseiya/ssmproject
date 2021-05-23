@@ -439,7 +439,7 @@ String basePath = request.getScheme() +
                             </div>
                             <label for="edit-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-customerName" value="动力节点">
+                                <input type="text" class="form-control" id="edit-customerName" value="湖北理工学院">
                             </div>
                         </div>
 
@@ -617,7 +617,7 @@ String basePath = request.getScheme() +
 					</thead>
 					<tbody>
 						<tr>
-							<td><a href="../transaction/detail.jsp" style="text-decoration: none;">动力节点-交易01</a></td>
+							<td><a href="../transaction/detail.jsp" style="text-decoration: none;">湖北理工学院-交易01</a></td>
 							<td>5,000</td>
 							<td>谈判/复审</td>
 							<td>90</td>

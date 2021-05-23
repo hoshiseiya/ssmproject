@@ -395,7 +395,6 @@ String basePath = request.getScheme() +
 					<table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
 						<thead>
 							<tr style="color: #B3B3B3;">
-								<td><input id="qxBund" type="checkbox"/></td>
 								<td>名称</td>
 								<td>开始日期</td>
 								<td>结束日期</td>
@@ -440,7 +439,7 @@ String basePath = request.getScheme() +
                             </div>
                             <label for="edit-company" class="col-sm-2 control-label">公司<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-company" value="动力节点">
+                                <input type="text" class="form-control" id="edit-company" value="湖北理工学院">
                             </div>
                         </div>
 

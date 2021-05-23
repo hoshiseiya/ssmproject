@@ -70,7 +70,7 @@
             //    为保存按钮绑定事件，执行备注添加的操作
             $("#saveRemarkBtn").click(function () {
                 if ($("#remark").val() == "") {
-                    alert("请输入备份再保存");
+                    alert("请输入备注再保存");
                     return false;
                 }
                 $.ajax({

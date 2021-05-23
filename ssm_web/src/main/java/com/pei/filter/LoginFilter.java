@@ -21,7 +21,7 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        if ("/ssm_web/".equals(request.getRequestURI()) || request.getRequestURI().contains("/login.jsp")||request.getRequestURI().contains("error")) {
+        if ("/ssm/".equals(request.getRequestURI()) || request.getRequestURI().contains("login")||request.getRequestURI().contains("error")) {
             chain.doFilter(req, resp);
         } else {
             HttpSession session = request.getSession(false);
