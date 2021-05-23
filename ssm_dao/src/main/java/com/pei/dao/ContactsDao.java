@@ -8,7 +8,6 @@ import java.util.Map;
 public interface ContactsDao {
     int save(Contacts con);
 
-
     List<Contacts> selectByCondition(Map<String, Object> map);
 
     Contacts detail(String id);
@@ -21,5 +20,5 @@ public interface ContactsDao {
 
     Integer updateRemark(ContactsRemark cr);
 
-    List<Contacts> getContactsListById(String id);
+    List<Contacts> getContactsListById(String customerId);
 }

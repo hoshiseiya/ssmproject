@@ -41,13 +41,8 @@ public class GlobalExceptionHandler {
 
 
 
-   /* @ExceptionHandler
-    public ModelAndView doOtherException(Exception e){
-        System.out.println("doOtherException = " + e);
-
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("tips","服务器崩溃了,请稍后重置");
-        mv.setViewName("/error/error");
-        return mv;
-    }*/
+    @ExceptionHandler
+    public String doOtherException(Exception e){
+        return "error/error.html";
+    }
 }

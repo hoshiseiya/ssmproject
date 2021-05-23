@@ -15,6 +15,8 @@ public interface ContactsService {
 
     List<ContactsRemark> getRemarkListByCid(String contactsId);
 
+    List<Contacts> getContactsListByCid(String customerId);
+
     Boolean deleteRemark(String id);
 
     Boolean saveRemark(ContactsRemark cr);

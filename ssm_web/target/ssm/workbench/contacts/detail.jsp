@@ -137,6 +137,7 @@
 				})
 			}
 		})
+		showActivityList();
 	});
 
 	function showRemarkList() {
@@ -202,6 +203,33 @@
 		//将模态窗口打开
 		$("#editRemarkModal").modal("show");
 	}
+
+    function showActivityList(){
+        $.ajax({
+            url:"contacts/getActivityListByContactsId.do",
+            data:{
+                "contactsId" :"${c.id}"
+            },
+            dataType:"json",
+            type:"get",
+            success:function (data){
+                /*
+                * 取得市场活动列表 铺到页面中
+                  */
+              var html="";
+                $.each(data,function (i,n){
+                    html += '<tr>';
+                    html += '<td>'+n.name+'</td>';
+                    html += '<td>'+n.startDate+'</td>';
+                    html += '<td>'+n.endDate+'</td>';
+                    html += '<td>'+n.owner+'</td>';
+                    html += '<td><a href="javascript:void(0);" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>';
+                    html += '</tr>';
+                })
+                $("#activityBody").html(html);
+            }
+        })
+    }
 </script>
 
 </head>
@@ -255,7 +283,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 联系人和市场活动关联的模态窗口 -->
 	<div class="modal fade" id="bundActivityModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 80%;">
@@ -311,7 +339,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 修改联系人的模态窗口 -->
 	<div class="modal fade" id="editContactsModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
@@ -324,7 +352,7 @@
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal" role="form">
-					
+
 						<div class="form-group">
 							<label for="edit-contactsOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -355,7 +383,7 @@
 								</select>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="edit-surname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -373,7 +401,7 @@
 								</select>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="edit-job" class="col-sm-2 control-label">职位</label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -384,7 +412,7 @@
 								<input type="text" class="form-control" id="edit-mphone" value="12345678901">
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="edit-email" class="col-sm-2 control-label">邮箱</label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -395,23 +423,23 @@
 								<input type="text" class="form-control" id="edit-birth">
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="edit-customerName" class="col-sm-2 control-label">客户名称</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="edit-customerName" placeholder="支持自动补全，输入客户不存在则新建" value="湖北理工学院">
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="edit-describe" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
 								<textarea class="form-control" rows="3" id="edit-describe">这是一条线索的描述信息</textarea>
 							</div>
 						</div>
-						
+
 						<div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>
-						
+
 						<div style="position: relative;top: 15px;">
 							<div class="form-group">
 								<label for="create-contactSummary" class="col-sm-2 control-label">联系纪要</label>
@@ -426,7 +454,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative; top : 10px;"></div>
 
                         <div style="position: relative;top: 20px;">
@@ -438,7 +466,7 @@
                             </div>
                         </div>
 					</form>
-					
+
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -452,7 +480,7 @@
 	<div style="position: relative; top: 35px; left: 10px;">
 		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
 	</div>
-	
+
 	<!-- 大标题 -->
 	<div style="position: relative; left: 40px; top: -30px;">
 		<div class="page-header">
@@ -463,7 +491,7 @@
 			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
 	</div>
-	
+
 	<!-- 详细信息 -->
 	<div style="position: relative; top: -70px;">
 		<div style="position: relative; left: 40px; height: 30px;">
@@ -559,7 +587,7 @@
 			</form>
 		</div>
 	</div>
-	
+
 	<!-- 交易 -->
 	<div>
 		<div style="position: relative; top: 20px; left: 40px;">
@@ -592,13 +620,13 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 			<div>
 				<a href="../transaction/save.jsp" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>新建交易</a>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 市场活动 -->
 	<div>
 		<div style="position: relative; top: 60px; left: 40px;">
@@ -616,25 +644,18 @@
 							<td></td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><a href="../activity/detail.jsp" style="text-decoration: none;">发传单</a></td>
-							<td>2020-10-10</td>
-							<td>2020-10-20</td>
-							<td>zhangsan</td>
-							<td><a href="javascript:void(0);" data-toggle="modal" data-target="#unbundActivityModal" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>
-						</tr>
+					<tbody id="activityBody">
 					</tbody>
 				</table>
 			</div>
-			
+
 			<div>
 				<a href="javascript:void(0);" data-toggle="modal" data-target="#bundActivityModal" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>关联市场活动</a>
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div style="height: 200px;"></div>
 </body>
 </html>

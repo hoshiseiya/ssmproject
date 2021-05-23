@@ -37,6 +37,11 @@ private ContactsDao contactsDao;
     }
 
     @Override
+    public List<Contacts> getContactsListByCid(String customerId) {
+        return contactsDao.getContactsListById(customerId);
+    }
+
+    @Override
     public Boolean deleteRemark(String id) {
         boolean flag = true;
         int count = contactsDao.deleteRemark(id);

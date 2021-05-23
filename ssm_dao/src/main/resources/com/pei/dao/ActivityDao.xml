@@ -88,6 +88,11 @@
         join clue_activity_relation car on a.id=car.activityId where car.clueId=#{clueId};
     </select>
 
+    <select id="getActivityListByContactsId" resultType="Activity">
+        select car.id as id,a.name,a.startDate,a.endDate,u.name as owner from activity a join user u on a.owner=u.id
+        join contacts_activity_relation car on a.id=car.activityId where car.contactsId=#{contactsId};
+    </select>
+
     <select id="getActivityListByName" resultType="Activity">
         select a.id,a.name,a.startDate,a.endDate,u.name as owner
         from activity a join user u on a.owner=u.id where a.name like '%' #{aname} '%';

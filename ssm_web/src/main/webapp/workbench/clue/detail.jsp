@@ -711,7 +711,6 @@ String basePath = request.getScheme() +
 						</tr>
 					</thead>
 					<tbody id="activityBody">
-
 					</tbody>
 				</table>
 			</div>

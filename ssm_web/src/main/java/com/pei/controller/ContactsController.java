@@ -2,6 +2,7 @@ package com.pei.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pei.domain.*;
+import com.pei.service.ActivityService;
 import com.pei.service.ContactsService;
 import com.pei.utils.DateTimeUtil;
 import com.pei.utils.UUIDUtil;
@@ -22,6 +23,9 @@ import java.util.Map;
 public class ContactsController {
     @Autowired
     private ContactsService contactsService;
+
+    @Autowired
+    private ActivityService activityService;
 
     @RequestMapping("/pageList.do")
     @ResponseBody
@@ -45,6 +49,21 @@ public class ContactsController {
         List<ContactsRemark> remarkList = contactsService.getRemarkListByCid(contactsId);
         return remarkList;
     }
+
+    @RequestMapping("/getContactsListById.do")
+    @ResponseBody
+    public List<Contacts> getContactsListById(String customerId) {
+        List<Contacts> contactsList = contactsService.getContactsListByCid(customerId);
+        return contactsList;
+    }
+
+    @RequestMapping("/getActivityListByContactsId.do")
+    @ResponseBody
+    private List<Activity> getActivityListByContactsId(String contactsId) {
+        List<Activity> activityList = activityService.getActivityListByContactsId(contactsId);
+        return activityList;
+    }
+
 
     @RequestMapping("/deleteRemark.do")
     @ResponseBody

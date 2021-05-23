@@ -57,6 +57,7 @@ String basePath = request.getScheme() +
 		});
 
 		showRemarkList();
+
 		$("#remarkBody").on("mouseover", ".remarkDiv", function () {
 			$(this).children("div").children("div").show();
 		})
@@ -138,6 +139,7 @@ String basePath = request.getScheme() +
 				})
 			}
 		})
+		showContactsList();
 	});
 
 	function showRemarkList() {
@@ -202,6 +204,35 @@ String basePath = request.getScheme() +
 		$("#noteContent").val(noteContent);
 		//将模态窗口打开
 		$("#editRemarkModal").modal("show");
+	}
+
+	function showContactsList() {
+		$.ajax({
+			url: "contacts/getContactsListById.do",
+			data: {
+				"customerId": "${c.id}"
+			},
+			dataType: "json",
+			type: "get",
+			success: function (data) {
+				/*
+                * data是一个备注的数组
+                * */
+				var html = "";
+				$.each(data, function (i, n) {
+					html += '<tr class="active">';
+					html +='<td>';
+					html +='<a href="contacts/detail.html" style="text-decoration: none;">'+ n.fullname+ '</a>';
+					html +='</td>';
+					html +='<td>'+ n.email +'</td>';
+					html +='<td>'+ n.mphone +'</td>';
+					html +='<td><a href="javascript:void(0);" data-toggle="modal" data-target="#removeContactsModal" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>删除</a></td>';
+					html +='</tr>';
+				})
+				$("#activityTable tbody").html(html);
+
+			}
+		})
 	}
 </script>
 
@@ -652,12 +683,12 @@ String basePath = request.getScheme() +
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+<%--						<tr>
 							<td><a href="../contacts/detail.html" style="text-decoration: none;">李四</a></td>
 							<td>lisi@bjpowernode.com</td>
 							<td>13543645364</td>
 							<td><a href="javascript:void(0);" data-toggle="modal" data-target="#removeContactsModal" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>删除</a></td>
-						</tr>
+						</tr>--%>
 					</tbody>
 				</table>
 			</div>
