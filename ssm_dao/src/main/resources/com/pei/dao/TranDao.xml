@@ -14,6 +14,10 @@ tran.createBy,tran.createTime,tran.editBy,tran.editTime,tran.description,tran.co
 on tran.customerId=cus.id left join activity act on tran.activityId=act.id left join contacts con on tran.contactsId=con.id where tran.id = #{id};
      </select>
 
+    <select id="findAllTrans" resultType="com.pei.domain.Tran">
+        select t.id,t.money,t.name,t.stage,t.type,t.source,cus.name as customerId,con.fullname as contactsId from tran t join customer cus on t.customerId = cus.id join contacts con on t.contactsId = con.id
+    </select>
+
     <insert id="save">
 insert into tran (
 id,owner,money,name,expectedDate,customerId,stage,type,source,activityId,contactsId,createBy,createTime,description,contactSummary,nextContactTime)

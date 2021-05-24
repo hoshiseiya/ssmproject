@@ -42,4 +42,10 @@ public class UserController {
         return map;
     }
 
+    public static void main(String[] args) {
+        StringBuilder stringBuilder = new StringBuilder();
+        StringBuffer stringBuffer = new StringBuffer();
+        String s = new String();
+    }
+
 }

@@ -21,13 +21,6 @@ String basePath = request.getScheme() +
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
 
-<script type="text/javascript">
-
-	$(function(){
-
-	});
-	
-</script>
 </head>
 <body>
 
@@ -135,54 +128,31 @@ String basePath = request.getScheme() +
 							<td>客户名称</td>
 							<td>阶段</td>
 							<td>类型</td>
-							<td>所有者</td>
 							<td>来源</td>
 							<td>联系人名称</td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='tran/detail.do?id=df4bbb00a72948fcb1c96fe8a604c7ba';">交易123</a></td>
-							<td>湖北理工学院</td>
-							<td>谈判/复审</td>
-							<td>新业务</td>
-							<td>zhangsan</td>
-							<td>广告</td>
-							<td>李四</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='tran/detail.jsp';">湖北理工学院</a></td>
-                            <td>湖北理工学院</td>
-                            <td>谈判/复审</td>
-                            <td>新业务</td>
-                            <td>zhangsan</td>
-                            <td>广告</td>
-                            <td>李四</td>
-                        </tr>
+                       <c:forEach items="#{transList}" var="t">
+						   <tr class="active">
+							   <td><input type="checkbox" /></td>
+							   <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='workbench/transaction/detail.jsp';">${t.name}</a></td>
+							   <td>${t.customerId}</td>
+							   <td>${t.stage}</td>
+							   <td>${t.type}</td>
+							   <td>${t.source}</td>
+							   <td>${t.contactsId}</td>
+						   </tr>
+					   </c:forEach>
 					</tbody>
 				</table>
 			</div>
 			
 			<div style="height: 50px; position: relative;top: 20px;">
 				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
+					<button type="button" class="btn btn-default" style="cursor: default;">共<b>1</b>条记录</button>
 				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
+
 				<div style="position: relative;top: -88px; left: 285px;">
 					<nav>
 						<ul class="pagination">

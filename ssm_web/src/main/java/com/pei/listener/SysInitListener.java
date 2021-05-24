@@ -21,8 +21,7 @@ public class SysInitListener implements ServletContextListener {
         //获取全局作用域对象
         ServletContext application = event.getServletContext();
         ApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(application);
-        DicService dicService = (DicService) applicationContext.getBean("dicServiceImpl");
-        //DicService dicService = applicationContext.getBean(DicServiceImpl.class);
+        DicService dicService = applicationContext.getBean(com.pei.service.DicService.class);
 
         Map<String, List<DicValue>> map = dicService.getAllDicValueList();
         Set<String> set = map.keySet();

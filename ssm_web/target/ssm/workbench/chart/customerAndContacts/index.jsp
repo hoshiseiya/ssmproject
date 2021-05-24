@@ -43,9 +43,6 @@
                         legend: {
                             orient: 'vertical',
                             left: 'left',
-                            top: 40,
-                            itemWidth: 70,
-                            itemHeight: 30
                         },
                         textStyle: {
                             fontSize: 15
@@ -57,7 +54,7 @@
                                 radius: '50%',
                                 label: {            //饼图图形上的文本标签
                                     normal: {
-                                        position:'inner',
+                                            // position:'inner',
                                         margin:10,
                                         show: true,
                                         formatter: '{b} : {c}个 \n ({d}%)'
